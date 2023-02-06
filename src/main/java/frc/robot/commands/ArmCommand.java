@@ -32,6 +32,7 @@ public class ArmCommand extends CommandBase {
       arm.armDown();
     }
 
+    //arm ......
   }
 
   // Called once the command ends or is interrupted.

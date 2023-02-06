@@ -29,6 +29,7 @@ public class ArmSubsystem extends SubsystemBase {
     private DoubleSolenoid armSol, intakeSolLeft, intakeSolRight;
 
     private CANSparkMax armLengthMotor;
+    private CANSparkMax wristMotor;
     
 
   /** Creates a new Intake. */
@@ -38,6 +39,7 @@ public class ArmSubsystem extends SubsystemBase {
     intakeSolLeft = new DoubleSolenoid(2, PneumaticsModuleType.CTREPCM, 3, 4);
     intakeSolRight = new DoubleSolenoid(2, PneumaticsModuleType.CTREPCM, 5, 6);
     armLengthMotor = new CANSparkMax(6, MotorType.kBrushed);
+    wristMotor = new CANSparkMax(7, MotorType.kBrushless);
 
   }
 
@@ -76,5 +78,8 @@ public void setArmLengthMotorPower(double power){
   armLengthMotor.set(power);
 }
 
+public void setWristMotorPower(double power){
+  wristMotor.set(power);
+}
 
 }
