@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -28,7 +29,8 @@ public class ArmSubsystem extends SubsystemBase {
   // Add Solenoids for Arm and Grasper
     private DoubleSolenoid armSol, intakeSolLeft, intakeSolRight;
 
-    private CANSparkMax armLengthMotor, wristMotor, intakeLeftMotor;    
+    private CANSparkMax armLengthMotor, wristMotor;
+    private Spark intakeLeftMotor;    
 
   /** Creates a new Intake. */
   public ArmSubsystem() {
@@ -40,7 +42,7 @@ public class ArmSubsystem extends SubsystemBase {
     
     armLengthMotor = new CANSparkMax(6, MotorType.kBrushed);
     wristMotor = new CANSparkMax(7, MotorType.kBrushless);
-    intakeLeftMotor = new CANSparkMax(8, MotorType.kBrushed);
+    intakeLeftMotor = new Spark(5);
   }
 
   @Override

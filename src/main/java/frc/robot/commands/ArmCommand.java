@@ -14,6 +14,8 @@ public class ArmCommand extends CommandBase {
 
   private final ArmSubsystem arm;
   double leftY = 0, rightY = 0;
+  double leftX = 0, rightX = 0;
+
   public ArmCommand( ArmSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
@@ -43,13 +45,27 @@ public class ArmCommand extends CommandBase {
       arm.openRight();
     }
     
-    leftY = Robot.getArmControlJoystick().getRawAxis(3);
-    rightY = Robot.getArmControlJoystick().getRawAxis(4);
+    if(Robot.getArmControlJoystick().getRawButton(4)){
+      arm.setWristMotorPower(.5);
+      arm.setIntakeLeftMotorPower(.5);
+
+    }
+    if(Robot.getArmControlJoystick().getRawButton(1)){
+      arm.setWristMotorPower(-.5);
+      arm.setIntakeLeftMotorPower(-.5);
+    }
+    if(Robot.getArmControlJoystick().getRawButton(2)){
+      arm.setIntakeLeftMotorPower(0); //stop button b
+    }
+
+    leftY = Robot.getArmControlJoystick().getRawAxis(1);
+    rightY = Robot.getArmControlJoystick().getRawAxis(5);
+
+    rightX = Robot.getArmControlJoystick().getRawAxis(4);
+    leftX = Robot.getArmControlJoystick().getRawAxis(0);
     
-    // arm.setArmLengthMotorPower(MathUtil.applyDeadband(leftY, 0.06));
-    // arm.setIntakeLeftMotorPower(leftY);
-    // arm.setIntakeRightMotorPower(leftY);
-    // arm.setWristMotorPower(leftY);
+    arm.setArmLengthMotorPower(MathUtil.applyDeadband(leftY, 0.06));
+    arm.setWristMotorPower(MathUtil.applyDeadband(rightY, 0.06));
   }
 
   // Called once the command ends or is interrupted.
