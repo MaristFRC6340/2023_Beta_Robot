@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.Robot;
@@ -12,7 +13,7 @@ public class ArmCommand extends CommandBase {
   /** Creates a new ArmCommand. */
 
   private final ArmSubsystem arm;
-
+  double leftY = 0, rightY = 0;
   public ArmCommand( ArmSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
@@ -32,7 +33,23 @@ public class ArmCommand extends CommandBase {
       arm.armDown();
     }
 
-    //arm ......
+    //recent
+    if(Robot.getArmControlJoystick().getRawButton(4)){
+      arm.openLeft();
+      arm.closeRight();
+    }
+    if(Robot.getArmControlJoystick().getRawButton(6)){
+      arm.closeLeft();
+      arm.openRight();
+    }
+    
+    leftY = Robot.getArmControlJoystick().getRawAxis(3);
+    rightY = Robot.getArmControlJoystick().getRawAxis(4);
+    
+    // arm.setArmLengthMotorPower(MathUtil.applyDeadband(leftY, 0.06));
+    // arm.setIntakeLeftMotorPower(leftY);
+    // arm.setIntakeRightMotorPower(leftY);
+    // arm.setWristMotorPower(leftY);
   }
 
   // Called once the command ends or is interrupted.

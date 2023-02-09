@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeEverySubsystem extends SubsystemBase {
 
   // Create SparkMax instance for Brushed motor for intake
+  
 
   /** Creates a new IntakeEverySubsystem. */
   public IntakeEverySubsystem() {}
