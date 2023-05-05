@@ -31,10 +31,10 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     // Updated Drive Command
     m_robotDrive.drive(
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
-                true);
+              false);
 
   }
 

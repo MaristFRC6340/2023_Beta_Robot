@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.getArmCommand().schedule();
+    //m_robotContainer.getArmCommand().schedule();
     m_robotContainer.getDriveCommand().schedule();
   }
 

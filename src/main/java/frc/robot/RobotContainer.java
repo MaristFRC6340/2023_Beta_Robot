@@ -37,9 +37,9 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  //private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 
-  private final ArmCommand armCommand = new ArmCommand(m_armSubsystem);
+  //private final ArmCommand armCommand = new ArmCommand(m_armSubsystem);
 
   // The driver's controller
   // TODO: Move this to a Static field in Robot Class
@@ -136,7 +136,8 @@ public class RobotContainer {
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
   public Command getArmCommand(){
-    return armCommand;
+    //return armCommand;
+    return null;  // Placeholder
   }
 
   public Command getDriveCommand() {
