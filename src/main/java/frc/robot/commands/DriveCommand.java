@@ -34,8 +34,12 @@ public class DriveCommand extends CommandBase {
     m_robotDrive.drive(
                 MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
                 MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
-              false);
+                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
+              true);
+
+    if(Robot.getDriveControlJoystick().getPOV()!=-1){
+      m_robotDrive.zeroHeading(Robot.getDriveControlJoystick().getPOV());
+    }
 
   }
 
