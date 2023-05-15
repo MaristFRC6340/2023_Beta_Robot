@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
@@ -22,6 +23,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.DriveCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -46,13 +48,14 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
-  double rotOffset = 0;
+  // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  private final AHRS m_gryo = new AHRS(SPI.Port.kMXP);
+  double rotOffset = 90;
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(m_gyro.getAngle()),
+      Rotation2d.fromDegrees(m_gryo.getAngle()),
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -68,7 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        Rotation2d.fromDegrees(m_gryo.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -80,7 +83,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Module 1 azimuth", m_frontRight.getAngle());
         SmartDashboard.putNumber("Module 2 azimuth", m_rearLeft.getAngle());
         SmartDashboard.putNumber("Module 3 azimuth", m_rearRight.getAngle());
-        SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+        SmartDashboard.putNumber("Gyro", m_gryo.getAngle());
   }
 
   /**
@@ -99,7 +102,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
-        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        Rotation2d.fromDegrees(m_gryo.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -126,7 +129,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(-m_gyro.getAngle()-rotOffset))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(-m_gryo.getAngle()-rotOffset))
             : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -170,7 +173,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading(double offset) {
-    m_gyro.reset();
+    m_gryo.reset();
     rotOffset = offset;
   }
 
@@ -180,7 +183,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees()-rotOffset;
+    return Rotation2d.fromDegrees(m_gryo.getAngle()).getDegrees()-rotOffset;
   }
 
   /**
@@ -189,13 +192,13 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_gryo.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
 public SequentialCommandGroup followTrajectoryCommand(PathPlannerTrajectory path, boolean isFirstPath){
-    PIDController thetaController = new PIDController(3.5,  0,  0);
-    PIDController xController = new PIDController(1.3, 0, 0);
-    PIDController yController = new PIDController(1.3, 0, 0);
+    PIDController thetaController = new PIDController(0,  0,  0);
+    PIDController xController = new PIDController(0, 0, 0);
+    PIDController yController = new PIDController(0, 0, 0);
 
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 

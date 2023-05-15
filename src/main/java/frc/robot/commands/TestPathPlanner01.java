@@ -21,14 +21,11 @@ public class TestPathPlanner01 extends SequentialCommandGroup {
   public TestPathPlanner01(DriveSubsystem m_robot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    PathPlannerTrajectory examplePath = PathPlanner.loadPath("Test Path #1", new PathConstraints(4, 3));
+    PathPlannerTrajectory examplePath = PathPlanner.loadPath("Test Path #1", new PathConstraints(1, 0.5));
 
 
     addCommands(
-      m_robot.followTrajectoryCommand(examplePath, false)
-
-
-
+      m_robot.followTrajectoryCommand(examplePath, true)
     );
   }
 }

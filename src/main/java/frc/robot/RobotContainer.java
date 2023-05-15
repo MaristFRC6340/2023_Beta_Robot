@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.TestPathPlanner01;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -139,6 +140,10 @@ public class RobotContainer {
 
   public Command getDriveCommand() {
     return new DriveCommand(m_robotDrive);
+  }
+
+  public Command getTestPathCommand() {
+    return new TestPathPlanner01(m_robotDrive);
   }
 
 }
