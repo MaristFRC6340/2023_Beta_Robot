@@ -32,9 +32,9 @@ public class DriveCommand extends CommandBase {
     // Updated Drive Command
     // Postive and Negative signs fixed for Remote input: michaudc 05 may 23
     m_robotDrive.drive(
-                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
               true);
 
     if(Robot.getDriveControlJoystick().getPOV()!=-1){

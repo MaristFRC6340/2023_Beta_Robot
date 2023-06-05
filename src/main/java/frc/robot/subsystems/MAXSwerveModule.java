@@ -165,4 +165,18 @@ public class MAXSwerveModule {
   public void resetEncoders() {
     m_drivingEncoder.setPosition(0);
   }
+  /**
+   * Retreives the output current in amps from the driving canSparkMax
+   * @return
+   */
+  public double getDrivingCurrent(){
+    return m_drivingSparkMax.getOutputCurrent();
+  }
+  /**
+   * Retrieves the output current in amps from the turning canSparkMax
+   * @return
+   */
+  public double getTurningCurrent(){
+    return m_turningSparkMax.getOutputCurrent();
+  }
 }

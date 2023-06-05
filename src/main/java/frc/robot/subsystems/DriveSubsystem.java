@@ -47,10 +47,49 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
+  private CurrentArray frontRight = new CurrentArray();
+  private CurrentArray frontLeft = new CurrentArray();
+  private CurrentArray rearRight = new CurrentArray();
+  private CurrentArray rearLeft = new CurrentArray();
+  private CurrentArray frontRightAzimuth = new CurrentArray();
+  private CurrentArray frontLeftAzimuth = new CurrentArray();
+  private CurrentArray rearRightAzimuth = new CurrentArray();
+  private CurrentArray rearLeftAzimuth = new CurrentArray();
+
   // The gyro sensor
   // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   private final AHRS m_gryo = new AHRS(SPI.Port.kMXP);
   double rotOffset = 90;
+
+  /**
+   * Acts like a ring buffer where it stores the 500 most recent currents
+   */
+  class CurrentArray{
+    private int len = 200;
+    private double[] currents = new double[len];
+    private int index = 0;
+
+    /**
+     * Places the current at the durrent index. If the end of the array is reached then resstarts at the beggining, replacing the older  current data
+     * @param current
+     */
+    public void add(double current){
+      if(index == currents.length) index = 0;
+      currents[index]=current;
+      index++;
+    }
+    /**
+     * return the average of thhe past len current speeds
+     * @return
+     */
+    public double getAverage(){
+      double average = 0.0;
+      for(int i = 0; i < currents.length; i++){
+          average += currents[i];
+      }
+      return average/len;
+    }
+  }
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -66,6 +105,8 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
   }
+
+  int count = 0;
 
   @Override
   public void periodic() {
@@ -84,6 +125,26 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Module 2 azimuth", m_rearLeft.getAngle());
         SmartDashboard.putNumber("Module 3 azimuth", m_rearRight.getAngle());
         SmartDashboard.putNumber("Gyro", m_gryo.getAngle());
+        frontRight.add(m_frontRight.getDrivingCurrent());
+        frontLeft.add(m_frontLeft.getDrivingCurrent());
+        rearRight.add(m_rearRight.getDrivingCurrent());
+        rearLeft.add(m_rearLeft.getDrivingCurrent());
+        frontRightAzimuth.add(m_frontRight.getTurningCurrent());
+        frontLeftAzimuth.add(m_frontLeft.getTurningCurrent());
+        rearRightAzimuth.add(m_rearRight.getTurningCurrent());
+        rearLeftAzimuth.add(m_rearLeft.getTurningCurrent());
+
+        SmartDashboard.putNumber("FrontRightDrivingCurrent", frontRight.getAverage());
+        SmartDashboard.putNumber("FrontLeftDrivingCurrent", frontLeft.getAverage());
+        SmartDashboard.putNumber("RearLeftDrivingCurrent", rearLeft.getAverage());
+        SmartDashboard.putNumber("RearRightDrivingCurrent", rearRight.getAverage());
+        SmartDashboard.putNumber("FrontRightTurningCurrent", frontRightAzimuth.getAverage());
+        SmartDashboard.putNumber("FrontLeftTurningCurrent", frontLeftAzimuth.getAverage());
+        SmartDashboard.putNumber("RearLeftTurningCurrent", rearLeftAzimuth.getAverage());
+        SmartDashboard.putNumber("RearRightTurningCurrent", rearRightAzimuth.getAverage());
+
+
+
   }
 
   /**
