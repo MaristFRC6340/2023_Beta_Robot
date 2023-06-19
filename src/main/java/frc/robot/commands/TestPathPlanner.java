@@ -14,11 +14,11 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestPathPlanner01 extends SequentialCommandGroup {
+public class TestPathPlanner extends SequentialCommandGroup {
   /** Creates a new TestPathPlanner01. */
 
   
-  public TestPathPlanner01(DriveSubsystem m_robot) {
+  public TestPathPlanner(DriveSubsystem m_robot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     PathPlannerTrajectory examplePath = PathPlanner.loadPath("Test Path #1", new PathConstraints(1, 0.5));

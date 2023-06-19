@@ -20,7 +20,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.TestPathPlanner01;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
+import frc.robot.commands.TestPathPlanner;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -143,7 +143,7 @@ public class RobotContainer {
   }
 
   public Command getTestPathCommand() {
-    return new TestPathPlanner01(m_robotDrive);
+    return new TestPathPlanner(m_robotDrive);
   }
 
 }
