@@ -22,12 +22,14 @@ import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 import frc.robot.commands.TestPathPlanner;
+import frc.robot.commands.WristCommand;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -38,7 +40,7 @@ import frc.robot.commands.TestPathPlanner;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  //private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final WristSubsystem wrist = new WristSubsystem();
 
   //private final ArmCommand armCommand = new ArmCommand(m_armSubsystem);
 
@@ -133,9 +135,8 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
-  public Command getArmCommand(){
-    //return armCommand;
-    return null;  // Placeholder
+  public Command getWristCommand(){
+    return new WristCommand(wrist);  // Placeholder
   }
 
   public Command getDriveCommand() {

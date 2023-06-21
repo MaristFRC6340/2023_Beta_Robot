@@ -45,6 +45,9 @@ public class MAXSwerveModule {
     m_drivingSparkMax.restoreFactoryDefaults();
     m_turningSparkMax.restoreFactoryDefaults();
 
+    //Lock turning Spark Max for Sys Id
+    m_turningSparkMax.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
     // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
     m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
@@ -108,10 +111,13 @@ public class MAXSwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
+
   }
 
   public double getAngle(){
     return m_turningEncoder.getPosition();
+  }public double getDriveEncoderPosition(){
+    return m_drivingEncoder.getPosition();
   }
 
   /**
@@ -157,7 +163,6 @@ public class MAXSwerveModule {
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
     m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
-
     m_desiredState = desiredState;
   }
 

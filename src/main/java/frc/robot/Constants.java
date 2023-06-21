@@ -63,6 +63,17 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
   }
 
+  public static final class WristConstants{
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double kIz = 0;
+      public static final double kFF = 0;
+      public static final double kMaxOutput = 0;
+      public static final double kMinOutput = 0;
+
+  }
+
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
     // This changes the drive speed of the module (a pinion gear with more teeth will result in a

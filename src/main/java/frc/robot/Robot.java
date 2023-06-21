@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -21,12 +23,19 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command wristCommand;
 
   private RobotContainer m_robotContainer;
 
+  //Auto Chooser
+  private Command autoSelected;
+  private final SendableChooser<Command> chooser = new SendableChooser<Command>();
+
+
   // TODO: Define the controllers for driving / arm control in static form
-  private static Joystick m_armControlJoystick = new Joystick(Constants.OIConstants.kArmControllerPort); // Port zero for left joystick
+  //private static Joystick m_armControlJoystick = new Joystick(Constants.OIConstants.kArmControllerPort); // Port zero for left joystick
   private static XboxController m_driverControlJoystick = new XboxController(Constants.OIConstants.kDriverControllerPort);
+  private static XboxController m_armControlJoystick = new XboxController(Constants.OIConstants.kArmControllerPort);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,6 +46,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
+    chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
+    chooser.addOption("DummyOption", m_robotContainer.getTestPathCommand());
+    SmartDashboard.putData(chooser);
+
+
+
   }
 
   /**
@@ -65,19 +82,18 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getTestPathCommand();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    autoSelected = chooser.getSelected();
+
+
+    
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (autoSelected != null) {
+      autoSelected.schedule();
+
     }
+  
   }
 
   /** This function is called periodically during autonomous. */
@@ -95,6 +111,7 @@ public class Robot extends TimedRobot {
     }
     //m_robotContainer.getArmCommand().schedule();
     m_robotContainer.getDriveCommand().schedule();
+    m_robotContainer.getWristCommand().schedule();
   }
 
   /** This function is called periodically during operator control. */
@@ -111,7 +128,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {}
 
-  public static Joystick getArmControlJoystick(){
+  public static XboxController getArmControlJoystick(){
     return m_armControlJoystick;
   }
 
