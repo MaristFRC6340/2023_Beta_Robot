@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.StraightLineAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -145,6 +146,9 @@ public class RobotContainer {
 
   public Command getTestPathCommand() {
     return new TestPathPlanner(m_robotDrive);
+  }
+  public Command getStraightLineAuto(){
+    return new StraightLineAuto(m_robotDrive);
   }
 
 }

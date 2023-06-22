@@ -104,12 +104,14 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04;
+    //Tuned using sysid 6/22 retrived Velocity PID values: P value of .121, D value of 0, max controller OUtput of 12
+    //and Position PID values: P of 131.92 D of 4.6884 and max controler output of 12
+    public static final double kDrivingP = .121;//used to be .04
     public static final double kDrivingI = 0;
-    public static final double kDrivingD = 0;
+    public static final double kDrivingD = 0;//used to be 0
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
     public static final double kDrivingMinOutput = -1;
-    public static final double kDrivingMaxOutput = 1;
+    public static final double kDrivingMaxOutput = 1;//used to be 1
 
     public static final double kTurningP = 1; // Orginal value was 1
     public static final double kTurningI = 0;

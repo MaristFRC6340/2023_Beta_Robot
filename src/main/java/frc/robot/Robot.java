@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 
     chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
-    chooser.addOption("DummyOption", m_robotContainer.getTestPathCommand());
+    chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
     SmartDashboard.putData(chooser);
 
 
