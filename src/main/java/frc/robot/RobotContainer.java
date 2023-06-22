@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.KyleSabatogeJavaPath;
 import frc.robot.commands.StraightLineAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -150,5 +151,7 @@ public class RobotContainer {
   public Command getStraightLineAuto(){
     return new StraightLineAuto(m_robotDrive);
   }
-
+  public Command getKyleSabatogeCommand(){
+    return new KyleSabatogeJavaPath(m_robotDrive);
+  }
 }

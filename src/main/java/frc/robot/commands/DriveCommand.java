@@ -14,12 +14,14 @@ public class DriveCommand extends CommandBase {
 
   // Field for DriveSubsystem
   private final DriveSubsystem m_robotDrive;
+  private  double manualSpeedModifier;
 
 
   /** Creates a new DriveCommand. */
   public DriveCommand(DriveSubsystem drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_robotDrive = drive;
+    manualSpeedModifier = 1;
   }
 
   // Called when the command is initially scheduled.
@@ -29,12 +31,21 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(Robot.getDriveControlJoystick().getLeftStickButton()){
+      manualSpeedModifier = 2;
+    }
+    else if (Robot.getDriveControlJoystick().getLeftTriggerAxis()>0){
+      manualSpeedModifier =1-Robot.getDriveControlJoystick().getLeftTriggerAxis(); 
+    }
+    else{
+      manualSpeedModifier=1;
+    }
     // Updated Drive Command
     // Postive and Negative signs fixed for Remote input: michaudc 05 may 23
     m_robotDrive.drive(
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
+                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
               true);
 
     if(Robot.getDriveControlJoystick().getPOV()!=-1){
