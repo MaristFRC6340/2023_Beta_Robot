@@ -1,18 +1,19 @@
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.WristSubsystem;
 
-public class WristCommand extends CommandBase{
+public class WristTeleopCommand extends CommandBase{
     private WristSubsystem wrist;
     private double wristPos = 0;
 
 
-    public WristCommand(WristSubsystem wrist){
+    public WristTeleopCommand(WristSubsystem wrist){
         this.wrist =wrist;
     }
 
@@ -26,8 +27,8 @@ public class WristCommand extends CommandBase{
   public void execute() {
     wristPos += Robot.getArmControlJoystick().getRightTriggerAxis();
     wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis();
-    wristPos = MathUtil.clamp(wristPos, 0, 400);
-    SmartDashboard.putNumber("WRISTPOSJOYSTICK", wristPos);
+    wristPos = MathUtil.clamp(wristPos, Constants.WristConstants.MIN_ENCODER_POS, Constants.WristConstants.MAX_ENCODER_POS);
+    SmartDashboard.putNumber("Wris Pos Expected", wristPos);
     wrist.goToPosition(wristPos);
 
   }

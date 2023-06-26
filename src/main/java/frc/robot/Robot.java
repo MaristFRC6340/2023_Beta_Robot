@@ -114,8 +114,9 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     //m_robotContainer.getArmCommand().schedule();
-    m_robotContainer.getDriveCommand().schedule();
-    m_robotContainer.getWristCommand().schedule();
+    m_robotContainer.getDriveTeleopCommand().schedule();
+    m_robotContainer.getWristTeleopCommand().schedule();
+    m_robotContainer.getSliderTeleopCommand().schedule();
   }
 
   /** This function is called periodically during operator control. */

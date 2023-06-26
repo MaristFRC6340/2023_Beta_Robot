@@ -64,15 +64,33 @@ public final class Constants {
   }
 
   public static final class WristConstants{
-      public static final double kP = 0;
+      public static final double kP = 1;
       public static final double kI = 0;
       public static final double kD = 0;
       public static final double kIz = 0;
       public static final double kFF = 0;
-      public static final double kMaxOutput = 0;
-      public static final double kMinOutput = 0;
+      //Min and MAx output values from PID Controller (representing motor power)
+      public static final double kMaxOutput = -0.5;
+      public static final double kMinOutput = .5;
+      //Constants for min and max encoder values to prevent it hitting things or overroatating
+      public static final double MIN_ENCODER_POS = 0;
+      public static final double MAX_ENCODER_POS = 400;
 
   }
+  public static final class SliderConstants{
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kIz = 0;
+    public static final double kFF = 0;
+    public static final double kMaxOutput = 0;
+    public static final double kMinOutput = 0;
+    
+      //Constants for min and max encoder values to prevent it hitting things or overroatating
+    public static final double MIN_ENCODER_POS = 0;
+    public static final double MAX_ENCODER_POS = 200;
+
+}
 
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
@@ -116,7 +134,7 @@ public final class Constants {
     public static final double kTurningP = 1; // Orginal value was 1
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
-    public static final double kTurningFF = 0;
+    public static final double kTurningFF = 0; // Original is 0 - test was 0.2
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 

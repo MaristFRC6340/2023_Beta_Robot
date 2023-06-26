@@ -18,20 +18,23 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ArmCommand;
-import frc.robot.commands.DriveCommand;
-import frc.robot.commands.KyleSabatogeJavaPath;
-import frc.robot.commands.StraightLineAuto;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
-import frc.robot.commands.TestPathPlanner;
-import frc.robot.commands.WristCommand;
+
+import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
+import frc.robot.commands.autonomous.StraightLineAuto;
+import frc.robot.commands.autonomous.TestPathPlanner;
+import frc.robot.commands.teleop.ArmCommand;
+import frc.robot.commands.teleop.DriveTeleopCommand;
+import frc.robot.commands.teleop.SliderTeleopCommand;
+import frc.robot.commands.teleop.WristTeleopCommand;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -41,14 +44,11 @@ import frc.robot.commands.WristCommand;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final DriveSubsystem robotDrive = new DriveSubsystem();
   private final WristSubsystem wrist = new WristSubsystem();
+  private final SliderSubsystem slider = new SliderSubsystem();
 
-  //private final ArmCommand armCommand = new ArmCommand(m_armSubsystem);
 
-  // The driver's controller
-  // TODO: Move this to a Static field in Robot Class
-  //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,20 +57,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // Configure default commands
-    // Below commented out for refactoring
-    /* 
-    m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier, 0.06),
-                true),
-            m_robotDrive));
-    */
+    
   }
 
   /**
@@ -85,8 +72,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(Robot.getDriveControlJoystick(), Button.kR1.value)
         .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+            () -> robotDrive.setX(),
+            robotDrive));
 
     
        
@@ -121,37 +108,39 @@ public class RobotContainer {
 
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
+        robotDrive::getPose, // Functional interface to feed supplier
         DriveConstants.kDriveKinematics,
 
         // Position controllers
         new PIDController(AutoConstants.kPXController, 0, 0),
         new PIDController(AutoConstants.kPYController, 0, 0),
         thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
+        robotDrive::setModuleStates,
+        robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+    robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
     // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    return swerveControllerCommand.andThen(() -> robotDrive.drive(0, 0, 0, false));
   }
-  public Command getWristCommand(){
-    return new WristCommand(wrist);  // Placeholder
+  public Command getWristTeleopCommand(){
+    return new WristTeleopCommand(wrist);  // Placeholder
   }
-
-  public Command getDriveCommand() {
-    return new DriveCommand(m_robotDrive);
+  public Command getDriveTeleopCommand() {
+    return new DriveTeleopCommand(robotDrive);
+  }
+  public Command getSliderTeleopCommand(){
+    return new SliderTeleopCommand(slider);
   }
 
   public Command getTestPathCommand() {
-    return new TestPathPlanner(m_robotDrive);
+    return new TestPathPlanner(robotDrive);
   }
   public Command getStraightLineAuto(){
-    return new StraightLineAuto(m_robotDrive);
+    return new StraightLineAuto(robotDrive);
   }
   public Command getKyleSabatogeCommand(){
-    return new KyleSabatogeJavaPath(m_robotDrive);
+    return new KyleSabatogeJavaPath(robotDrive);
   }
 }
