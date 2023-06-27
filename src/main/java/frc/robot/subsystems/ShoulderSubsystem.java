@@ -23,8 +23,8 @@ public class ShoulderSubsystem extends SubsystemBase {
 
     public ShoulderSubsystem(){
         //Instantiate the CAN Spark Maxes
-        leftShoulderMotor=new CANSparkMax(3, MotorType.kBrushless);
-        rightShoulderMotor = new CANSparkMax(4, MotorType.kBrushless);
+        leftShoulderMotor=new CANSparkMax(6, MotorType.kBrushless);
+        rightShoulderMotor = new CANSparkMax(7, MotorType.kBrushless);
 
         //instantiate the leader's (right Shoulder's) PID Controller
         leaderPIDController = rightShoulderMotor.getPIDController();
