@@ -88,10 +88,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Module 1 azimuth(FRONT_RIGHT", m_frontRight.getAngle());
         SmartDashboard.putNumber("Module 2 azimuth(REAR LEFT)", m_rearLeft.getAngle());
         SmartDashboard.putNumber("Module 3 azimuth (REAR RIGHT)", m_rearRight.getAngle());
-        SmartDashboard.putNumber("Module 0 drive(FRONT LEFT)", m_frontLeft.getDriveEncoderPosition());
-        SmartDashboard.putNumber("Module 1 drive(FRONT_RIGHT", m_frontRight.getDriveEncoderPosition());
-        SmartDashboard.putNumber("Module 2 drive(REAR LEFT)", m_rearLeft.getDriveEncoderPosition());
-        SmartDashboard.putNumber("Module 3 drive (REAR RIGHT)", m_rearRight.getDriveEncoderPosition());
+       
         SmartDashboard.putNumber("Gyro", m_gryo.getAngle());
         
 

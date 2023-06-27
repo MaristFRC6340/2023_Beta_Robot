@@ -115,8 +115,9 @@ public class MAXSwerveModule {
   }
 
   public double getAngle(){
-    return m_turningEncoder.getPosition();
-  }public double getDriveEncoderPosition(){
+    return Math.toDegrees(m_turningEncoder.getPosition()-m_chassisAngularOffset);
+  }
+  public double getDriveEncoderPosition(){
     return m_drivingEncoder.getPosition();
   }
 
