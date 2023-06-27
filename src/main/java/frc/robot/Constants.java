@@ -70,8 +70,8 @@ public final class Constants {
       public static final double kIz = 0;
       public static final double kFF = 0;
       //Min and MAx output values from PID Controller (representing motor power)
-      public static final double kMaxOutput = 0.1;
-      public static final double kMinOutput = -.1;
+      public static final double kMaxOutput = 0.25;
+      public static final double kMinOutput = -.25;
       //Constants for min and max encoder values to prevent it hitting things or overroatating
       public static final double MIN_ENCODER_POS = 0;
       public static final double MAX_ENCODER_POS = 400;
