@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Command wristCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -117,6 +116,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getDriveTeleopCommand().schedule();
     m_robotContainer.getWristTeleopCommand().schedule();
     m_robotContainer.getSliderTeleopCommand().schedule();
+    m_robotContainer.getShoulderTeleopCommand().schedule();
   }
 
   /** This function is called periodically during operator control. */

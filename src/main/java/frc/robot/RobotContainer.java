@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
 import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +36,8 @@ import frc.robot.commands.teleop.ArmCommand;
 import frc.robot.commands.teleop.DriveTeleopCommand;
 import frc.robot.commands.teleop.SliderTeleopCommand;
 import frc.robot.commands.teleop.WristTeleopCommand;
+import frc.robot.commands.teleop.ShoulderTeleopCommand;
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -47,6 +50,7 @@ public class RobotContainer {
   private final DriveSubsystem robotDrive = new DriveSubsystem();
   private final WristSubsystem wrist = new WristSubsystem();
   private final SliderSubsystem slider = new SliderSubsystem();
+  private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
 
 
 
@@ -132,6 +136,9 @@ public class RobotContainer {
   }
   public Command getSliderTeleopCommand(){
     return new SliderTeleopCommand(slider);
+  }
+  public Command getShoulderTeleopCommand(){
+    return new ShoulderTeleopCommand(shoulder);
   }
 
   public Command getTestPathCommand() {
