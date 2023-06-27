@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.SliderSubsystem;
+import frc.robot.subsystems.ShoulderSubsystem;
 
-public class SliderTeleopCommand extends CommandBase{
+public class ShoulderTeleopCommand extends CommandBase{
     
-    private SliderSubsystem slider;
-    private double sliderPos;
-    public SliderTeleopCommand(SliderSubsystem slider){
-        this.slider = slider;
-        this.sliderPos=0;
+    private ShoulderSubsystem shoulder;
+    private double shoulderPos;
+    public ShoulderTeleopCommand(ShoulderSubsystem shoulder){
+        this.shoulder = shoulder;
+        this.shoulderPos=0;
     }
 
 
@@ -25,10 +25,10 @@ public class SliderTeleopCommand extends CommandBase{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1);
-        sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
-        SmartDashboard.putNumber("sliderPosExpected", sliderPos);
-        slider.goToPos(sliderPos);
+        shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1);
+        shoulderPos = MathUtil.clamp(shoulderPos, Constants.ShoulderConstants.MIN_ENCODER_POS, Constants.ShoulderConstants.MAX_ENCODER_POS);
+        SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
+        shoulder.goToPos(shoulderPos);
 
     }
 
