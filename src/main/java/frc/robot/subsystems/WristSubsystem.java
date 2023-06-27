@@ -24,6 +24,7 @@ public class WristSubsystem extends SubsystemBase{
         //getting the PID controller from the CANSparkMax
         wristPidController=wristMotor.getPIDController();
 
+
         //setting pid variables from constants class
         wristPidController.setP(Constants.WristConstants.kP);
         wristPidController.setI(Constants.WristConstants.kI);
@@ -49,6 +50,10 @@ public class WristSubsystem extends SubsystemBase{
      */
     public double getPosition(){
         return wristRelativeEncoder.getPosition(); 
+    }
+
+    public void resetEncoder(){
+        wristRelativeEncoder.setPosition(0.0);
     }
 
     /**
