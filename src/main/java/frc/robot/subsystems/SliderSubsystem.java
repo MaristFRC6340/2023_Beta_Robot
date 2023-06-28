@@ -61,7 +61,6 @@ public class SliderSubsystem extends SubsystemBase {
      */
     public void goToPos(double encoderCounts){
         leaderPIDController.setReference(encoderCounts, CANSparkMax.ControlType.kPosition);
-        //rightSliderMotor.set(.2);
     }
 
     public void resetEncoder(){

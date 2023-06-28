@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -37,6 +38,7 @@ import frc.robot.commands.teleop.DriveTeleopCommand;
 import frc.robot.commands.teleop.SliderTeleopCommand;
 import frc.robot.commands.teleop.WristTeleopCommand;
 import frc.robot.commands.teleop.ShoulderTeleopCommand;
+import frc.robot.commands.teleop.IntakeTeleopCommand;
 
 
 /*
@@ -51,6 +53,7 @@ public class RobotContainer {
   private final WristSubsystem wrist = new WristSubsystem();
   private final SliderSubsystem slider = new SliderSubsystem();
   private final ShoulderSubsystem shoulder = new ShoulderSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
 
 
 
@@ -139,6 +142,9 @@ public class RobotContainer {
   }
   public Command getShoulderTeleopCommand(){
     return new ShoulderTeleopCommand(shoulder);
+  }
+  public Command getIntakeTeleopCommand(){
+    return new IntakeTeleopCommand(intake);
   }
 
   public Command getTestPathCommand() {

@@ -92,6 +92,10 @@ public final class Constants {
 
 }
 
+public static final class IntakeConstants{
+  public static final double motorPower = .5;
+}
+
 public static final class ShoulderConstants{
   public static final double kP = 1;
   public static final double kI = 0;
