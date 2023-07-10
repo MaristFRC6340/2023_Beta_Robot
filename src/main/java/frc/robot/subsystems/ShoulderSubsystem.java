@@ -26,6 +26,9 @@ public class ShoulderSubsystem extends SubsystemBase {
         leftShoulderMotor=new CANSparkMax(7, MotorType.kBrushless);
         rightShoulderMotor = new CANSparkMax(6, MotorType.kBrushless);
 
+        //inverse right shoulder motor
+        leftShoulderMotor.setInverted(false);
+
        
 
         //instantiate the leader's (right Shoulder's) PID Controller
