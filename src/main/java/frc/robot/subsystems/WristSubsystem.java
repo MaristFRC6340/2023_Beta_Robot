@@ -18,7 +18,7 @@ public class WristSubsystem extends SubsystemBase{
 
 
     public WristSubsystem(){
-        wristMotor = new CANSparkMax(8, MotorType.kBrushless);//previously 8
+        wristMotor = new CANSparkMax(8, MotorType.kBrushless);
         //getting the encoder from CANSparkMax
         wristRelativeEncoder = wristMotor.getEncoder();
         //getting the PID controller from the CANSparkMax

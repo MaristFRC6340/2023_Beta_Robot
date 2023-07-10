@@ -64,21 +64,21 @@ public final class Constants {
   }
 
   public static final class WristConstants{
-      public static final double kP = 0.5;
+      public static final double kP = 0.7;
       public static final double kI = 0;
       public static final double kD = 0;
       public static final double kIz = 0;
       public static final double kFF = 0;
       //Min and MAx output values from PID Controller (representing motor power)
-      public static final double kMaxOutput = 0.25;
-      public static final double kMinOutput = -.25;
+      public static final double kMaxOutput = 0.75;
+      public static final double kMinOutput = -.75;
       //Constants for min and max encoder values to prevent it hitting things or overroatating
       public static final double MIN_ENCODER_POS = 0;
       public static final double MAX_ENCODER_POS = 400;
 
   }
   public static final class SliderConstants{
-    public static final double kP = 1;
+    public static final double kP = .7;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kIz = 0;

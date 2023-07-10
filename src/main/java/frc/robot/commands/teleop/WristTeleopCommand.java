@@ -27,11 +27,11 @@ public class WristTeleopCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wristPos += Robot.getArmControlJoystick().getRightTriggerAxis()*.7;
-    wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis()*.7;
-    wristPos = MathUtil.clamp(wristPos, Constants.WristConstants.MIN_ENCODER_POS, Constants.WristConstants.MAX_ENCODER_POS);
-    SmartDashboard.putNumber("Wris Pos Expected", wristPos);
-    wrist.goToPosition(wristPos);
+    //wristPos += Robot.getArmControlJoystick().getRightTriggerAxis()*.7;
+    //wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis()*.7;
+    //wristPos = MathUtil.clamp(wristPos, Constants.WristConstants.MIN_ENCODER_POS, Constants.WristConstants.MAX_ENCODER_POS);
+    //SmartDashboard.putNumber("Wris Pos Expected", wristPos);
+    //wrist.goToPosition(wristPos);
 
   }
 

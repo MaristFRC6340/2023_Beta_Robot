@@ -1,30 +1,36 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 
 import frc.robot.Constants;
 
 public class IntakeSubsystem {
-    private CANSparkMax intake;
+    private TalonFX intakeMotor;
     private double curPower;
 
 
     public IntakeSubsystem(){
-        intakeMotor = new CANSparkMax(5, CANSparkMax.MotorType.kBrushless);
+        intakeMotor = new TalonFX(5);
     }
 
     public void intake(){
-        intakeMotor.set(Constants.IntakeConstants.motorPower);
+        intakeMotor.set(TalonFXControlMode.PercentOutput, Constants.IntakeConstants.motorPower);
         curPower = Constants.IntakeConstants.motorPower;
     }
     public void outtake(){
-        intakeMotor.set(-Constants.IntakeConstants.motorPower);
+        intakeMotor.set(TalonFXControlMode.PercentOutput,-Constants.IntakeConstants.motorPower);
         curPower = -Constants.IntakeConstants.motorPower;
 
     }
+
+    public void setPower(double power) {
+        intakeMotor.set(TalonFXControlMode.PercentOutput, power);
+        curPower = power;
+    }
     public void stop(){
-        intakeMotor.set(0);
+        intakeMotor.set(TalonFXControlMode.PercentOutput,0);
         curPower = 0;
     }
     public double getPower(){

@@ -19,16 +19,20 @@ public class ShoulderTeleopCommand extends CommandBase{
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+      shoulder.resetEncoder();
+    }
 
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1);
+        shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1)/10.0;
         shoulderPos = MathUtil.clamp(shoulderPos, Constants.ShoulderConstants.MIN_ENCODER_POS, Constants.ShoulderConstants.MAX_ENCODER_POS);
         SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
         shoulder.goToPos(shoulderPos);
+        // shoulder.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .06));
+        // SmartDashboard.putNumber("ShoulderPosExpected", -Robot.getArmControlJoystick().getRightY());
 
     }
 

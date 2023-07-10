@@ -27,10 +27,12 @@ public class SliderTeleopCommand extends CommandBase{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1);
-        sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
-        SmartDashboard.putNumber("sliderPosExpected", sliderPos);
-        slider.goToPos(sliderPos);
+        //sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1);
+        //sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
+        //SmartDashboard.putNumber("sliderPosExpected", sliderPos);
+          SmartDashboard.putNumber("sliderPosExpected", -Robot.getArmControlJoystick().getLeftY());
+
+        slider.goToPos(-Robot.getArmControlJoystick().getLeftY());
 
     }
 
