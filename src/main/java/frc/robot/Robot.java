@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     //m_robotContainer.getArmCommand().schedule();
     m_robotContainer.getDriveTeleopCommand().schedule();
     m_robotContainer.getWristTeleopCommand().schedule();
-    //m_robotContainer.getSliderTeleopCommand().schedule();
+    m_robotContainer.getSliderTeleopCommand().schedule();
     m_robotContainer.getShoulderTeleopCommand().schedule();
     m_robotContainer.getIntakeTeleopCommand().schedule();
   }

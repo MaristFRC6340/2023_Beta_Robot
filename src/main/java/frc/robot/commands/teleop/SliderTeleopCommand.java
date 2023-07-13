@@ -11,9 +11,11 @@ public class SliderTeleopCommand extends CommandBase{
     
     private SliderSubsystem slider;
     private double sliderPos;
+    private int sliderMode;
     public SliderTeleopCommand(SliderSubsystem slider){
         this.slider = slider;
         this.sliderPos=0;
+        this.sliderMode=0;
     }
 
 
@@ -27,13 +29,28 @@ public class SliderTeleopCommand extends CommandBase{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1);
-        //sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
-        //SmartDashboard.putNumber("sliderPosExpected", sliderPos);
+        
+
+        if(sliderMode == 0){
+          slider.resetEncoder();
           SmartDashboard.putNumber("sliderPosExpected", -Robot.getArmControlJoystick().getLeftY());
+          slider.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .06)/5.0);
+          SmartDashboard.putString("SliderMode", "Power");
 
-        slider.goToPos(-Robot.getArmControlJoystick().getLeftY());
+        }
+        else{
+          sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1)/5.0;
+          sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
+          SmartDashboard.putNumber("sliderPosExpected", sliderPos);
+          SmartDashboard.putString("SliderMode", "Encoder");
+          slider.goToPos(sliderPos);
+        }
 
+        //Changing shoulderMode
+        if(Robot.getArmControlJoystick().getLeftBumperPressed()){
+          if(sliderMode==0)sliderMode=1;
+          else sliderMode=0;
+        }
     }
 
 

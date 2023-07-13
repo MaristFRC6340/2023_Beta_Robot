@@ -23,8 +23,8 @@ public class SliderSubsystem extends SubsystemBase {
 
     public SliderSubsystem(){
         //Instantiate the CAN Spark Maxes
-        leftSliderMotor=new CANSparkMax(3, MotorType.kBrushless); 
-        rightSliderMotor = new CANSparkMax(4, MotorType.kBrushless);
+        leftSliderMotor=new CANSparkMax(4, MotorType.kBrushless); 
+        rightSliderMotor = new CANSparkMax(3, MotorType.kBrushless);
 
         //instantiate the leader's (right slider's) PID Controller
         leaderPIDController = rightSliderMotor.getPIDController();
@@ -46,7 +46,7 @@ public class SliderSubsystem extends SubsystemBase {
         rightSliderRelativeEncoder = rightSliderMotor.getEncoder();
 
         //set the leftSlider Motor to follow the leader(right) motor
-       // leftSliderMotor.follow(rightSliderMotor);
+       leftSliderMotor.follow(rightSliderMotor, true);
     }
     @Override
     public void periodic(){
@@ -60,9 +60,11 @@ public class SliderSubsystem extends SubsystemBase {
      * @param encoderCounts target encoder counts for the motor to run to
      */
     public void goToPos(double encoderCounts){
-        //leaderPIDController.setReference(encoderCounts, CANSparkMax.ControlType.kPosition);
-        leftSliderMotor.set(encoderCounts);
-        rightSliderMotor.set(encoderCounts);
+        leaderPIDController.setReference(encoderCounts, CANSparkMax.ControlType.kPosition);
+    }
+    public void setPower(double power){
+        rightSliderMotor.set(power);
+
     }
 
     public void resetEncoder(){

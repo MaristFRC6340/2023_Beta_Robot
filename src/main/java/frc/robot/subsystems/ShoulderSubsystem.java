@@ -26,10 +26,6 @@ public class ShoulderSubsystem extends SubsystemBase {
         leftShoulderMotor=new CANSparkMax(7, MotorType.kBrushless);
         rightShoulderMotor = new CANSparkMax(6, MotorType.kBrushless);
 
-        //inverse right shoulder motor
-        leftShoulderMotor.setInverted(false);
-
-       
 
         //instantiate the leader's (right Shoulder's) PID Controller
         leaderPIDController = rightShoulderMotor.getPIDController();
@@ -48,7 +44,7 @@ public class ShoulderSubsystem extends SubsystemBase {
         rightShoulderRelativeEncoder = rightShoulderMotor.getEncoder();
 
         //set the leftShoulder Motor to follow the leader(right) motor
-        leftShoulderMotor.follow(rightShoulderMotor);
+        leftShoulderMotor.follow(rightShoulderMotor, true);
     }
     @Override
     public void periodic(){

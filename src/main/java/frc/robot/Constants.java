@@ -88,7 +88,7 @@ public final class Constants {
     
       //Constants for min and max encoder values to prevent it hitting things or overroatating
     public static final double MIN_ENCODER_POS = 0;
-    public static final double MAX_ENCODER_POS = 200;
+    public static final double MAX_ENCODER_POS = 50;
 
 }
 
