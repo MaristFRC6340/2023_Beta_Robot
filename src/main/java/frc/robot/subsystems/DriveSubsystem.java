@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -24,6 +25,7 @@ import frc.robot.commands.teleop.DriveTeleopCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
+
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -46,6 +48,7 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
+  private Field2d field = new Field2d();
 
   
 
@@ -53,6 +56,11 @@ public class DriveSubsystem extends SubsystemBase {
   // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   private final AHRS m_gryo = new AHRS(SPI.Port.kMXP);
   double rotOffset = 90;
+
+
+  private double driveP = Constants.ModuleConstants.kDrivingP;
+  private double driveI = Constants.ModuleConstants.kDrivingI;
+  private double driveD = Constants.ModuleConstants.kDrivingD;
 
 
   // Odometry class for tracking robot pose
@@ -68,6 +76,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+    SmartDashboard.putNumber("Drive P", driveP);
+    SmartDashboard.putNumber("Drive I", driveI);
+    SmartDashboard.putNumber("Drive D", driveD);
+    SmartDashboard.putData(field);
+
   }
 
   int count = 0;
@@ -88,12 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Module 1 azimuth(FRONT_RIGHT", m_frontRight.getAngle());
         SmartDashboard.putNumber("Module 2 azimuth(REAR LEFT)", m_rearLeft.getAngle());
         SmartDashboard.putNumber("Module 3 azimuth (REAR RIGHT)", m_rearRight.getAngle());
-       
         SmartDashboard.putNumber("Gyro", m_gryo.getAngle());
-        
-
-
-
+        //update robot position on field
+      field.setRobotPose(getPose());
   }
 
   /**

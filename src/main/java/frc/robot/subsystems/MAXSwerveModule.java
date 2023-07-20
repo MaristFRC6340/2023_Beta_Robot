@@ -167,6 +167,15 @@ public class MAXSwerveModule {
     m_desiredState = desiredState;
   }
 
+  /**
+   * Reset the PIDgains for the driving motor
+   */
+  public void setDrivePID(double driveP, double driveI, double driveD){
+    m_drivingPIDController.setP(ModuleConstants.kDrivingP);
+    m_drivingPIDController.setI(ModuleConstants.kDrivingI);
+    m_drivingPIDController.setD(ModuleConstants.kDrivingD);
+  }
+
   /** Zeroes all the SwerveModule encoders. */
   public void resetEncoders() {
     m_drivingEncoder.setPosition(0);

@@ -32,6 +32,7 @@ import java.util.List;
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
 import frc.robot.commands.autonomous.StraightLineAuto;
 import frc.robot.commands.autonomous.TestPathPlanner;
+import frc.robot.commands.teleop.DrivePIDTuning;
 import frc.robot.commands.teleop.DriveTeleopCommand;
 import frc.robot.commands.teleop.SliderTeleopCommand;
 import frc.robot.commands.teleop.WristTeleopCommand;
@@ -153,5 +154,8 @@ public class RobotContainer {
   }
   public Command getKyleSabatogeCommand(){
     return new KyleSabatogeJavaPath(robotDrive);
+  }
+  public Command getDrivePIDTuningCommand(){
+    return new DrivePIDTuning(robotDrive);
   }
 }

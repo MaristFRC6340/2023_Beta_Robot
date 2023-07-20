@@ -50,10 +50,9 @@ public class Robot extends TimedRobot {
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
     chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
     chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
+    chooser.addOption("DrivePID TUNING", m_robotContainer.getDrivePIDTuningCommand());
     SmartDashboard.putData("Auto List",chooser);
 
-    String[] options = new String[]{"TEST1","TEST2", "TEST3"};
-    SmartDashboard.putStringArray("Auto Lssist", options);
 
 
 
@@ -113,7 +112,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     //m_robotContainer.getArmCommand().schedule();
-    m_robotContainer.getDriveTeleopCommand().schedule();
+    //m_robotContainer.getDriveTeleopCommand().schedule();
+      m_robotContainer.getDrivePIDTuningCommand().schedule();
     m_robotContainer.getWristTeleopCommand().schedule();
     m_robotContainer.getSliderTeleopCommand().schedule();
     m_robotContainer.getShoulderTeleopCommand().schedule();
