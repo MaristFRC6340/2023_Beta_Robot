@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -29,6 +32,7 @@ public class Robot extends TimedRobot {
   //Auto Chooser
   private Command autoSelected;
   private final SendableChooser<Command> chooser = new SendableChooser<Command>();
+  private final SendableChooser<Command[]> teleopChooser = new SendableChooser<Command[]>();
 
 
   // TODO: Define the controllers for driving / arm control in static form
@@ -46,13 +50,17 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    //List CHoosable Autos
     chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
     chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
     chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
-    chooser.addOption("DrivePID TUNING", m_robotContainer.getDrivePIDTuningCommand());
     SmartDashboard.putData("Auto List",chooser);
 
+    //List Choosable Teleops
+    teleopChooser.setDefaultOption("Default/Competition Teleop", new Command[]{m_robotContainer.getDriveTeleopCommand(), m_robotContainer.getShoulderTeleopCommand(), m_robotContainer.getSliderTeleopCommand(), m_robotContainer.getWristTeleopCommand(), m_robotContainer.getIntakeTeleopCommand()});
+    teleopChooser.addOption("PIDTuning", new Command[]{m_robotContainer.getDrivePIDTuningCommand()});
+    SmartDashboard.putData("Teleop List", teleopChooser);
 
 
 
@@ -111,13 +119,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //m_robotContainer.getArmCommand().schedule();
-    //m_robotContainer.getDriveTeleopCommand().schedule();
-      m_robotContainer.getDrivePIDTuningCommand().schedule();
-    m_robotContainer.getWristTeleopCommand().schedule();
-    m_robotContainer.getSliderTeleopCommand().schedule();
-    m_robotContainer.getShoulderTeleopCommand().schedule();
-    m_robotContainer.getIntakeTeleopCommand().schedule();
+   for(Command command: teleopChooser.getSelected()){
+    command.schedule();
+   }
   }
 
   /** This function is called periodically during operator control. */

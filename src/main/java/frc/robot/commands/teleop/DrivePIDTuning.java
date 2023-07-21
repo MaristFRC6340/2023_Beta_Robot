@@ -22,6 +22,7 @@ public class DrivePIDTuning extends CommandBase{
   private PIDController xController = new PIDController(1, 0, 0);
   private PIDController yController = new PIDController(1, 0, 0);
   Pose2d target = null;
+  double distance = 10;
 
 
   double[] pidValues = {Constants.DriveConstants.thetaP, Constants.DriveConstants.thetaI, Constants.DriveConstants.thetaD, Constants.DriveConstants.xP, Constants.DriveConstants.xI, Constants.DriveConstants.xD, Constants.DriveConstants.yP, Constants.DriveConstants.yI, Constants.DriveConstants.yD};
@@ -39,7 +40,9 @@ public class DrivePIDTuning extends CommandBase{
     for(int i = 0; i < pidValues.length; i++){
       SmartDashboard.putNumber(pidNames[i], pidValues[i]);
     }
-    target = new Pose2d(new Translation2d(0,10), new Rotation2d(0));
+    SmartDashboard.putNumber("distanceToRun", distance);
+
+    target = new Pose2d(new Translation2d(0,0), new Rotation2d(0));
     thetaController.setSetpoint(target.getRotation().getRadians());
     xController.setSetpoint(target.getX());
     yController.setSetpoint(target.getY());
@@ -48,16 +51,16 @@ public class DrivePIDTuning extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    //Run to position using PID controllers
     m_robotDrive.setModuleStates(Constants.DriveConstants.kDriveKinematics.toSwerveModuleStates(
-        ChassisSpeeds.fromFieldRelativeSpeeds(
-        xController.calculate(m_robotDrive.getPose().getX(), target.getX()),
-        yController.calculate(m_robotDrive.getPose().getY(), target.getY()),
-        thetaController.calculate(m_robotDrive.getPose().getRotation().getRadians(), target.getRotation().getRadians()),
-        m_robotDrive.getPose().getRotation()
-        ))
-        );
-    //read new PID values
+      ChassisSpeeds.fromFieldRelativeSpeeds(
+      xController.calculate(m_robotDrive.getPose().getX(), target.getX()),
+      yController.calculate(m_robotDrive.getPose().getY(), target.getY()),
+      thetaController.calculate(m_robotDrive.getPose().getRotation().getRadians(), target.getRotation().getRadians()),
+      m_robotDrive.getPose().getRotation()
+      ))
+    );
+    // read new PID values
     // for(int i = 0; i < pidValues.length; i++){
     //   pidValues[i] = SmartDashboard.getNumber(pidNames[i], pidValues[i]);
     // }
@@ -70,31 +73,34 @@ public class DrivePIDTuning extends CommandBase{
     // yController.setP(pidValues[6]);
     // yController.setI(pidValues[7]);
     // yController.setD(pidValues[8]);
+    //read distance value
+    distance = SmartDashboard.getNumber("distanceToRun", distance) ;
+    
+  
+    //check joysticks  
     if(Robot.getDriveControlJoystick().getYButtonPressed()){
-        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(0,10), new Rotation2d(0)));
+        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(0,distance), new Rotation2d(0)));
       }
 
 
-    //   //dirve backward 10
+      //dirve backward 10
       if(Robot.getDriveControlJoystick().getAButton()){
-        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(0,-10), new Rotation2d(0)));
+        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(0,-distance), new Rotation2d(0)));
       }
-    //   //drive right 10
+      //drive right 10
       if(Robot.getDriveControlJoystick().getBButton()){
-        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(10,0), new Rotation2d(0)));
+        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(distance,0), new Rotation2d(0)));
       }
-    //   //drive left 10
+      //drive left 10
       if(Robot.getDriveControlJoystick().getXButton()){
-        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(-10,0), new Rotation2d(0)));
+        target = m_robotDrive.getPose().plus(new Transform2d(new Translation2d(distance,0), new Rotation2d(0)));
       }
+      if(Robot.getDriveControlJoystick().getPOV()!=-1){
+        m_robotDrive.zeroHeading(Robot.getDriveControlJoystick().getPOV());
+      }
+
 
   }
-
-
-
-  
-
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
