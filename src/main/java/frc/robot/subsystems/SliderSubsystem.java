@@ -45,8 +45,14 @@ public class SliderSubsystem extends SubsystemBase {
         leftSliderRelativeEncoder = leftSliderMotor.getEncoder();
         rightSliderRelativeEncoder = rightSliderMotor.getEncoder();
 
+        //set the rightSliderMotor to be INverted
+        rightSliderMotor.setInverted(true);
+        rightSliderMotor.burnFlash();
+
         //set the leftSlider Motor to follow the leader(right) motor
        leftSliderMotor.follow(rightSliderMotor, true);
+
+
     }
     @Override
     public void periodic(){

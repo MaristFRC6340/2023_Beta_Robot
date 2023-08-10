@@ -22,7 +22,6 @@ public class SliderTeleopCommand extends CommandBase{
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      slider.resetEncoder();
     }
 
   
@@ -32,10 +31,12 @@ public class SliderTeleopCommand extends CommandBase{
         
 
         if(sliderMode == 0){
-          slider.resetEncoder();
           SmartDashboard.putNumber("sliderPosExpected", -Robot.getArmControlJoystick().getLeftY());
           slider.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .06)/5.0);
           SmartDashboard.putString("SliderMode", "Power");
+
+          //update the sliderPos with the current state of the slider so it accurately tracks where the slider is when controlled by power
+          sliderPos = slider.getPosition();
 
         }
         else{

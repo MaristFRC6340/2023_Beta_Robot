@@ -59,8 +59,11 @@ public class Robot extends TimedRobot {
 
     //List Choosable Teleops
     teleopChooser.setDefaultOption("Default/Competition Teleop", new Command[]{m_robotContainer.getDriveTeleopCommand(), m_robotContainer.getShoulderTeleopCommand(), m_robotContainer.getSliderTeleopCommand(), m_robotContainer.getWristTeleopCommand(), m_robotContainer.getIntakeTeleopCommand()});
-    teleopChooser.addOption("PIDTuning", new Command[]{m_robotContainer.getDrivePIDTuningCommand()});
+    teleopChooser.addOption("Testing Teleop(Encoder and PID Tuning)", new Command[]{m_robotContainer.getDrivePIDTuningCommand(), m_robotContainer.getSubsystemEncoderTuningCommand()});
     SmartDashboard.putData("Teleop List", teleopChooser);
+
+    //reset encoder values for shoulder, slider, and wrist
+
 
 
 

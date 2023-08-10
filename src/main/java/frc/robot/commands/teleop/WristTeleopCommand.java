@@ -20,7 +20,6 @@ public class WristTeleopCommand extends CommandBase{
     // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    wrist.resetEncoder();
   }
 
   

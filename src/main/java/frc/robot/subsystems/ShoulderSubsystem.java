@@ -43,6 +43,10 @@ public class ShoulderSubsystem extends SubsystemBase {
         leftShoulderRelativeEncoder = leftShoulderMotor.getEncoder();
         rightShoulderRelativeEncoder = rightShoulderMotor.getEncoder();
 
+        //invert the right Shoulder motor so raising the arm increases encoder counts
+        rightShoulderMotor.setInverted(true);
+        rightShoulderMotor.burnFlash();
+
         //set the leftShoulder Motor to follow the leader(right) motor
         leftShoulderMotor.follow(rightShoulderMotor, true);
     }
@@ -72,6 +76,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     public void resetEncoder(){
         leftShoulderRelativeEncoder.setPosition(0);
         rightShoulderRelativeEncoder.setPosition(0);
+        SmartDashboard.putNumber("leftShoulderEncoderPos", leftShoulderRelativeEncoder.getPosition());
+        SmartDashboard.putNumber("rightShoulderEncoderPos", rightShoulderRelativeEncoder.getPosition());
     }
 
     /**

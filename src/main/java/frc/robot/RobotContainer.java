@@ -35,6 +35,7 @@ import frc.robot.commands.autonomous.TestPathPlanner;
 import frc.robot.commands.teleop.DrivePIDTuning;
 import frc.robot.commands.teleop.DriveTeleopCommand;
 import frc.robot.commands.teleop.SliderTeleopCommand;
+import frc.robot.commands.teleop.SubsystemEncoderTuning;
 import frc.robot.commands.teleop.WristTeleopCommand;
 import frc.robot.commands.teleop.ShoulderTeleopCommand;
 import frc.robot.commands.teleop.IntakeTeleopCommand;
@@ -63,6 +64,9 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    //reset the subsystem encoders
+    resetSubsystemEncoders();
+
     
   }
 
@@ -79,10 +83,17 @@ public class RobotContainer {
     new JoystickButton(Robot.getDriveControlJoystick(), Button.kR1.value)
         .whileTrue(new RunCommand(
             () -> robotDrive.setX(),
-            robotDrive));
+            robotDrive));  
+  }
 
-    
-       
+  /**
+   * Call this method once upon the RobotContainer's creation to reset the encoders of the wrist, slider, and shoulder back to 0
+   * @return
+   */
+  public void resetSubsystemEncoders(){
+    shoulder.resetEncoder();
+    slider.resetEncoder();
+    wrist.resetEncoder();
   }
 
   /**
@@ -157,5 +168,9 @@ public class RobotContainer {
   }
   public Command getDrivePIDTuningCommand(){
     return new DrivePIDTuning(robotDrive);
+  }
+
+  public Command getSubsystemEncoderTuningCommand() {
+    return new SubsystemEncoderTuning(shoulder, slider, wrist);
   }
 }

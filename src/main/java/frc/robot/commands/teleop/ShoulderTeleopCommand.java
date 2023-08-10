@@ -23,7 +23,6 @@ public class ShoulderTeleopCommand extends CommandBase{
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      shoulder.resetEncoder();
     }
 
   
@@ -32,25 +31,35 @@ public class ShoulderTeleopCommand extends CommandBase{
     public void execute() {
         
         if(shoulderMode == 0){
-          shoulder.resetEncoder();
           shoulder.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .06)/5.0);
-          SmartDashboard.putNumber("ShoulderPosExpected", -Robot.getArmControlJoystick().getRightY());
+          //update the shoulderPose with the current state of the shoulder so it accurately tracks where the shoulder is when controlled by power
+          shoulderPos = shoulder.getPosition();
+          SmartDashboard.putNumber("ShoulderPosExpected",shoulderPos);
           SmartDashboard.putString("ShoulderMode", "Power");
+          
 
         }
         else{
-          shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1)/10.0;
+          shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1)/5.0;
           shoulderPos = MathUtil.clamp(shoulderPos, Constants.ShoulderConstants.MIN_ENCODER_POS, Constants.ShoulderConstants.MAX_ENCODER_POS);
           SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
           SmartDashboard.putString("ShoulderMode", "Encoder");
-
-          shoulder.goToPos(-shoulderPos);
+          shoulder.goToPos(shoulderPos);
         }
 
         //Changing shoulderMode
-        if(Robot.getArmControlJoystick().getRightBumperPressed()){
+        if(!Robot.getArmControlJoystick().getRightStickButton() && Robot.getArmControlJoystick().getRightBumperPressed()){
           if(shoulderMode==0)shoulderMode=1;
           else shoulderMode=0;
+        }
+
+        //System.out.println(Robot.getArmControlJoystick().getRightBumperPressed())
+        //Resetting the encoder for the shoulder; happens if right bumper is pressed while joystick button is held
+        if(Robot.getArmControlJoystick().getRightBumperPressed() && Robot.getArmControlJoystick().getRightStickButton()){
+          shoulder.resetEncoder();
+          shoulderPos = 0;
+          SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
+          SmartDashboard.putString("ShoulderMode", "Encoder");
         }
     }
 
