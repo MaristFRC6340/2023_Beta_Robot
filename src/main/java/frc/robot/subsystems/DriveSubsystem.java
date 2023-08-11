@@ -215,31 +215,26 @@ public class DriveSubsystem extends SubsystemBase {
     return m_gryo.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
-public SequentialCommandGroup followTrajectoryCommand(PathPlannerTrajectory path, boolean isFirstPath){
-    PIDController thetaController = new PIDController(0,  0,  0);
-    PIDController xController = new PIDController(0, 0, 0);
-    PIDController yController = new PIDController(0, 0, 0);
+  public SequentialCommandGroup followTrajectoryCommand(PathPlannerTrajectory path, boolean isFirstPath){
+      PIDController thetaController = new PIDController(-0.7,  0,  0);
+      PIDController xController = new PIDController(0, 0, 0);
+      PIDController yController = new PIDController(0, 0, 0);
 
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-
-  return new SequentialCommandGroup(
-
-
-  new PPSwerveControllerCommand(
-        path,
-        this::getPose,
-        Constants.DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        this::setModuleStates,
-        true,
-        this
-      )
-  
-    );
-
+      thetaController.enableContinuousInput(-Math.PI, Math.PI);
+      return new SequentialCommandGroup(
+        new PPSwerveControllerCommand(
+          path,
+          this::getPose,
+          Constants.DriveConstants.kDriveKinematics,
+          xController,
+          yController,
+          thetaController,
+          this::setModuleStates,
+          true,
+          this
+        )
+        
+      );
   }
 }
 

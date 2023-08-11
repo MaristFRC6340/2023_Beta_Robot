@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -30,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
+import frc.robot.commands.autonomous.PIDTuningTestPaths;
 import frc.robot.commands.autonomous.StraightLineAuto;
 import frc.robot.commands.autonomous.TestPathPlanner;
 import frc.robot.commands.teleop.DrivePIDTuning;
@@ -172,5 +174,8 @@ public class RobotContainer {
 
   public Command getSubsystemEncoderTuningCommand() {
     return new SubsystemEncoderTuning(shoulder, slider, wrist);
+  }
+  public Command getPIDTuningTestPath(){
+    return new PIDTuningTestPaths(robotDrive, (int)SmartDashboard.getNumber("PIDTuningTestPathSelected", 3));
   }
 }

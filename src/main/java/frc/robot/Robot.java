@@ -55,7 +55,11 @@ public class Robot extends TimedRobot {
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
     chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
     chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
+    chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
     SmartDashboard.putData("Auto List",chooser);
+
+        
+    SmartDashboard.putNumber("PIDTuningTestPathSelected", 0);
 
     //List Choosable Teleops
     teleopChooser.setDefaultOption("Default/Competition Teleop", new Command[]{m_robotContainer.getDriveTeleopCommand(), m_robotContainer.getShoulderTeleopCommand(), m_robotContainer.getSliderTeleopCommand(), m_robotContainer.getWristTeleopCommand(), m_robotContainer.getIntakeTeleopCommand()});
