@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.teleop.DriveTeleopCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -66,7 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(m_gryo.getAngle()),
+      Rotation2d.fromDegrees(-m_gryo.getAngle()), // Compass - make negative
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -89,7 +90,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gryo.getAngle()),
+        Rotation2d.fromDegrees(-m_gryo.getAngle()), // Reversed for now, make negative
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -203,7 +204,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gryo.getAngle()).getDegrees()-rotOffset;
+    return Rotation2d.fromDegrees(m_gryo.getAngle()).getDegrees()-rotOffset; // changed from - to + 8/14/23
   }
 
   /**
@@ -216,12 +217,15 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public SequentialCommandGroup followTrajectoryCommand(PathPlannerTrajectory path, boolean isFirstPath){
-      PIDController thetaController = new PIDController(-0.7,  0,  0);
-      PIDController xController = new PIDController(0, 0, 0);
-      PIDController yController = new PIDController(0, 0, 0);
+      PIDController thetaController = new PIDController(Constants.DriveConstants.thetaP,  Constants.DriveConstants.thetaI,  Constants.DriveConstants.thetaD);//-.7
+      PIDController xController = new PIDController(Constants.DriveConstants.xP, Constants.DriveConstants.xI, Constants.DriveConstants.xD);
+      PIDController yController = new PIDController(Constants.DriveConstants.yP, Constants.DriveConstants.yI, Constants.DriveConstants.yD);
 
       thetaController.enableContinuousInput(-Math.PI, Math.PI);
       return new SequentialCommandGroup(
+        new InstantCommand(() ->{
+          if(isFirstPath){this.resetOdometry(path.getInitialHolonomicPose());}
+        }),
         new PPSwerveControllerCommand(
           path,
           this::getPose,

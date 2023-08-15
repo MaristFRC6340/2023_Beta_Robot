@@ -61,18 +61,18 @@ public class DrivePIDTuning extends CommandBase{
       ))
     );
     // read new PID values
-    for(int i = 0; i < pidValues.length; i++){
-      pidValues[i] = SmartDashboard.getNumber(pidNames[i], pidValues[i]);
-    }
-    thetaController.setP(pidValues[0]);
-    thetaController.setI(pidValues[1]);
-    thetaController.setD(pidValues[2]);
-    xController.setP(pidValues[3]);
-    xController.setI(pidValues[4]);
-    xController.setD(pidValues[5]);
-    yController.setP(pidValues[6]);
-    yController.setI(pidValues[7]);
-    yController.setD(pidValues[8]);
+    // for(int i = 0; i < pidValues.length; i++){
+    //   pidValues[i] = SmartDashboard.getNumber(pidNames[i], pidValues[i]);
+    // }
+    // thetaController.setP(pidValues[0]);
+    // thetaController.setI(pidValues[1]);
+    // thetaController.setD(pidValues[2]);
+    // xController.setP(pidValues[3]);
+    // xController.setI(pidValues[4]);
+    // xController.setD(pidValues[5]);
+    // yController.setP(pidValues[6]);
+    // yController.setI(pidValues[7]);
+    // yController.setD(pidValues[8]);
     //read distance value
     distance = SmartDashboard.getNumber("distanceToRun", distance) ;
     

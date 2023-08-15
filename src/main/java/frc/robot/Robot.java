@@ -8,6 +8,8 @@
 package frc.robot;
 
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -50,6 +52,25 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    //Read through all the files in the deploy/pathplanner folder and add them as auto options
+    ArrayList<String> pathNames = new ArrayList<String>();
+    // /Users/robotics/frc2023/2023_Beta_Robot/src
+    File pathFolder = new File("/home/lvuser/deploy/pathplanner");//acess the path folder
+    
+
+    try{
+      for(File f: pathFolder.listFiles()){//iterate through all the files in it
+        if(f.isFile() && f.getName().contains(".path")){//if the file is a .path file
+          pathNames.add(f.getName().replace(".path", ""));//add it to the Path Names list
+        }
+      }
+    }
+    catch(NullPointerException e){
+      e.printStackTrace();
+    }
+    for(String pathFile: pathNames){
+      chooser.addOption(pathFile + " (Generated from deploy folder)", m_robotContainer.getPathPlannerLoaderCommand(pathFile));
+    }
     //List CHoosable Autos
     chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());

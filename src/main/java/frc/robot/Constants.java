@@ -64,7 +64,7 @@ public final class Constants {
 
 
     //Drive PID Controllers
-    public static final double thetaP = 0;
+    public static final double thetaP = .7;
     public static final double thetaI = 0;
     public static final double thetaD = 0;
     public static final double xP = 0;

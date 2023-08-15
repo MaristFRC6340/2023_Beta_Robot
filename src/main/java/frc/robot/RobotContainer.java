@@ -32,6 +32,7 @@ import java.util.List;
 
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
 import frc.robot.commands.autonomous.PIDTuningTestPaths;
+import frc.robot.commands.autonomous.PathPlannerLoader;
 import frc.robot.commands.autonomous.StraightLineAuto;
 import frc.robot.commands.autonomous.TestPathPlanner;
 import frc.robot.commands.teleop.DrivePIDTuning;
@@ -177,5 +178,9 @@ public class RobotContainer {
   }
   public Command getPIDTuningTestPath(){
     return new PIDTuningTestPaths(robotDrive, (int)SmartDashboard.getNumber("PIDTuningTestPathSelected", 3));
+  }
+
+  public Command getPathPlannerLoaderCommand(String pathFileName){
+    return new PathPlannerLoader(robotDrive, pathFileName);
   }
 }
