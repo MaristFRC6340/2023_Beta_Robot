@@ -82,8 +82,8 @@ public class SliderSubsystem extends SubsystemBase {
      * 
      */
     public double getPosition(){
-        //return leftSliderRelativeEncoder.getPosition();
-        return 0;
+        return rightSliderRelativeEncoder.getPosition();
+        //return 0;
     }
 
 }

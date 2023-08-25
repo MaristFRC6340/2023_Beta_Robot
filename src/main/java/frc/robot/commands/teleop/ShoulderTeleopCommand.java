@@ -41,7 +41,7 @@ public class ShoulderTeleopCommand extends CommandBase{
         }
         else{
           shoulderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getRightY(), .1)/5.0;
-          shoulderPos = MathUtil.clamp(shoulderPos, Constants.ShoulderConstants.MIN_ENCODER_POS, Constants.ShoulderConstants.MAX_ENCODER_POS);
+         // shoulderPos = MathUtil.clamp(shoulderPos, Constants.ShoulderConstants.MIN_ENCODER_POS, Constants.ShoulderConstants.MAX_ENCODER_POS);
           SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
           SmartDashboard.putString("ShoulderMode", "Encoder");
           shoulder.goToPos(shoulderPos);
@@ -59,7 +59,6 @@ public class ShoulderTeleopCommand extends CommandBase{
           shoulder.resetEncoder();
           shoulderPos = 0;
           SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
-          SmartDashboard.putString("ShoulderMode", "Encoder");
         }
     }
 

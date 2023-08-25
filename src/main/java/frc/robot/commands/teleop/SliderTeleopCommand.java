@@ -31,7 +31,7 @@ public class SliderTeleopCommand extends CommandBase{
         
 
         if(sliderMode == 0){
-          SmartDashboard.putNumber("sliderPosExpected", -Robot.getArmControlJoystick().getLeftY());
+          SmartDashboard.putNumber("sliderPosExpected", sliderPos);
           slider.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .06)/5.0);
           SmartDashboard.putString("SliderMode", "Power");
 
@@ -41,16 +41,22 @@ public class SliderTeleopCommand extends CommandBase{
         }
         else{
           sliderPos += MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .1)/5.0;
-          sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
+          //sliderPos = MathUtil.clamp(sliderPos, Constants.SliderConstants.MIN_ENCODER_POS, Constants.SliderConstants.MAX_ENCODER_POS);
           SmartDashboard.putNumber("sliderPosExpected", sliderPos);
           SmartDashboard.putString("SliderMode", "Encoder");
           slider.goToPos(sliderPos);
         }
 
         //Changing shoulderMode
-        if(Robot.getArmControlJoystick().getLeftBumperPressed()){
+        if(!Robot.getArmControlJoystick().getLeftStickButton() && Robot.getArmControlJoystick().getLeftBumperPressed()){
           if(sliderMode==0)sliderMode=1;
           else sliderMode=0;
+        }
+        //Resetting the encoder for the shoulder; happens if right bumper is pressed while joystick button is held
+        if(Robot.getArmControlJoystick().getLeftBumperPressed() && Robot.getArmControlJoystick().getLeftStickButton()){
+          slider.resetEncoder();
+          sliderPos = 0;
+          SmartDashboard.putNumber("ShoulderPosExpected", sliderPos);
         }
     }
 
