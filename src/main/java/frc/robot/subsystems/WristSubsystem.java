@@ -45,6 +45,13 @@ public class WristSubsystem extends SubsystemBase{
     }
 
     /**
+     * 
+     */
+    public void setPower(double pow){
+        wristMotor.set(pow);
+    }
+
+    /**
      * retrieve the current encoder position of the wrist motor
      * @return encoder position retrieved from relative encoder object
      */

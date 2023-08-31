@@ -29,8 +29,17 @@ public class IntakeTeleopCommand extends CommandBase{
     else intake.stop();
     SmartDashboard.putNumber("intakePower", intake.getPower());
     */
-    double intakePower = Robot.getArmControlJoystick().getRightTriggerAxis()*.7 - Robot.getArmControlJoystick().getLeftTriggerAxis()*.7;
-    intake.setPower(intakePower);
+    if(Robot.getArmControlJoystick().getBButton()){
+      intake.setPower(1);
+    }
+    else if(Robot.getArmControlJoystick().getXButton()){
+      intake.setPower(-1);
+
+    }
+    else{
+      intake.setPower(0);
+    }
+    
 
   }
 

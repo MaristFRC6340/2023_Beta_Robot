@@ -37,7 +37,7 @@ public class DriveTeleopCommand extends CommandBase {
     desiredHeading = m_robotDrive.getPose().getRotation().getDegrees();
     //intialize the PID Controller
     thetaController = new PIDController(Constants.DriveConstants.thetaP, Constants.DriveConstants.thetaI, Constants.DriveConstants.thetaD);
-    thetaController.enableContinuousInput(0, 360);
+    thetaController.enableContinuousInput(-180, 180);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,7 +54,7 @@ public class DriveTeleopCommand extends CommandBase {
     }
 
     //update the theta Controller
-    thetaController.setSetpoint(desiredHeading);
+    thetaController.setSetpoint(MathUtil.inputModulus(desiredHeading, -180, 180));
 
     if(Math.abs(MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX(), 0.06)) > 0){
       desiredHeading += MathUtil.applyDeadband(Robot.getDriveControlJoystick().getRightX(), 0.06);
@@ -63,11 +63,12 @@ public class DriveTeleopCommand extends CommandBase {
     //wrap the values for the desired heading
     if(desiredHeading > 360)desiredHeading = desiredHeading-360;
     else if(desiredHeading <=0) desiredHeading = 360 + desiredHeading;
+    
 
 
 
     //get the power to run the rotational speed at
-    double rotPower = thetaController.calculate(m_robotDrive.getPose().getRotation().getDegrees());
+    double rotPower = thetaController.calculate(MathUtil.inputModulus(m_robotDrive.getPose().getRotation().getDegrees(), -180, 180));
 
     //Send values to SmartDashboard
     SmartDashboard.putNumber("rotPower", rotPower);
@@ -81,8 +82,8 @@ public class DriveTeleopCommand extends CommandBase {
     m_robotDrive.drive(
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
-                MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
-                /**rotPower,**/
+                /**MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),**/
+                rotPower*.2,
               true);
 
     if(Robot.getDriveControlJoystick().getPOV()!=-1){

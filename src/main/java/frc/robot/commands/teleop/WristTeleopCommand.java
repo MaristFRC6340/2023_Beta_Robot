@@ -31,6 +31,7 @@ public class WristTeleopCommand extends CommandBase{
     //wristPos = MathUtil.clamp(wristPos, Constants.WristConstants.MIN_ENCODER_POS, Constants.WristConstants.MAX_ENCODER_POS);
     //SmartDashboard.putNumber("Wris Pos Expected", wristPos);
     //wrist.goToPosition(wristPos);
+    wrist.setPower((Robot.getArmControlJoystick().getRightTriggerAxis()-Robot.getArmControlJoystick().getLeftTriggerAxis())*3);
 
   }
 
