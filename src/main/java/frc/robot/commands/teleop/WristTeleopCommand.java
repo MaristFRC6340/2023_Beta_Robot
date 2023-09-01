@@ -20,18 +20,19 @@ public class WristTeleopCommand extends CommandBase{
     // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    wristPos = wrist.getPosition();
   }
+  
 
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //wristPos += Robot.getArmControlJoystick().getRightTriggerAxis()*.7;
-    //wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis()*.7;
-    //wristPos = MathUtil.clamp(wristPos, Constants.WristConstants.MIN_ENCODER_POS, Constants.WristConstants.MAX_ENCODER_POS);
-    //SmartDashboard.putNumber("Wris Pos Expected", wristPos);
-    //wrist.goToPosition(wristPos);
-    wrist.setPower((Robot.getArmControlJoystick().getRightTriggerAxis()-Robot.getArmControlJoystick().getLeftTriggerAxis())*3);
+    wristPos += Robot.getArmControlJoystick().getRightTriggerAxis()*(1/5.0);
+    wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis()*(1/5.0);
+    SmartDashboard.putNumber("Wris Pos Expected", wristPos);
+    wrist.goToPosition(wristPos);
+    //wrist.setPower((Robot.getArmControlJoystick().getRightTriggerAxis()-Robot.getArmControlJoystick().getLeftTriggerAxis())*1.5);
 
   }
 
@@ -46,4 +47,5 @@ public class WristTeleopCommand extends CommandBase{
   public boolean isFinished() {
     return false;
   }
+  
 }
