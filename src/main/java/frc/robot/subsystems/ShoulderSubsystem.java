@@ -13,7 +13,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     
     
     private CANSparkMax rightShoulderMotor;//Leader Motor
-    private CANSparkMax leftShoulderMotor;
+    private CANSparkMax leftShoulderMotor;//Follower Motor
+
     //Only the Leader Actuator needs a PID Controller as the followers will mimic the leaders behaviour
     private SparkMaxPIDController leaderPIDController;
     private RelativeEncoder rightShoulderRelativeEncoder;
@@ -72,16 +73,18 @@ public class ShoulderSubsystem extends SubsystemBase {
         //leftShoulderMotor.set(power);
         rightShoulderMotor.set(power);
     }
-
+    /**
+     * Resets the encoers of the shoulder motors
+     */
     public void resetEncoder(){
         leftShoulderRelativeEncoder.setPosition(0);
         rightShoulderRelativeEncoder.setPosition(0);
-        SmartDashboard.putNumber("leftShoulderEncoderPos", leftShoulderRelativeEncoder.getPosition());
-        SmartDashboard.putNumber("rightShoulderEncoderPos", rightShoulderRelativeEncoder.getPosition());
+       
     }
 
     /**
-     * 
+     * Return the encoder position of the left shoulder motor; We onlu retrun the left Shoulder Motor encoder 
+     * because it is the leader and the right shoulder motor will just follow anything the left motor will do regardless of encoder counts
      */
     public double getPosition(){
         return leftShoulderRelativeEncoder.getPosition();

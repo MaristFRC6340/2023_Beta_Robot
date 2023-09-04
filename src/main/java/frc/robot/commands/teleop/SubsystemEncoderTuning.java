@@ -14,7 +14,7 @@ public class SubsystemEncoderTuning extends CommandBase{
     private SliderSubsystem slider;
     private WristSubsystem wrist;
 
-    private double shoulderPos, sliderPos = 0;
+    private double shoulderPos, sliderPos, wristPos = 0;
 
     /** Creates a new DriveCommand. */
   public SubsystemEncoderTuning(ShoulderSubsystem shoulder, SliderSubsystem slider, WristSubsystem wrist){
@@ -29,19 +29,26 @@ public class SubsystemEncoderTuning extends CommandBase{
   public void initialize() {
     shoulder.resetEncoder();
     slider.resetEncoder();
+    wrist.resetEncoder();
     SmartDashboard.putNumber("SliderTargetPos", 0);
     SmartDashboard.putNumber("ShoulderTargetPos", 0);
-    SmartDashboard.putBoolean("SendValues", false);
+    SmartDashboard.putNumber("WristTargetPos", 0);
+    SmartDashboard.putBoolean("SendValues", false);//Set button to be  in false state
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(SmartDashboard.getBoolean("SendValues", false)){
+    if(SmartDashboard.getBoolean("SendValues", false)){//If the sendValues button has been pressed/is in true state
+      //Retreive Desired States
         sliderPos = SmartDashboard.getNumber("SliderTargetPos", sliderPos);
         shoulderPos = SmartDashboard.getNumber("ShoulderTargetPos", shoulderPos);
+        wristPos = SmartDashboard.getNumber("WristTargetPos", wristPos);
+        //Set Shoulder, Slider and Wrist to desired States
         shoulder.goToPos(shoulderPos);
         slider.goToPos(sliderPos);
+        wrist.goToPosition(wristPos);
+        //Reset the button to false state
         SmartDashboard.putBoolean("SendValues", false);
     }
 

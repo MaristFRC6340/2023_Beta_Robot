@@ -13,11 +13,16 @@ public class SliderSubsystem extends SubsystemBase {
     
     
     private CANSparkMax rightSliderMotor;//Leader Motor
-    private CANSparkMax leftSliderMotor;
+    private CANSparkMax leftSliderMotor;//follower 
+
     //Only the Leader Actuator needs a PID Controller as the followers will mimic the leaders behaviour
      private SparkMaxPIDController leaderPIDController;
      private RelativeEncoder rightSliderRelativeEncoder;
     private RelativeEncoder leftSliderRelativeEncoder;
+
+    //If you set one motor to follow another one it will mimic any power sent to the leader motor
+    //This is handy for our SLider subsystem because we have two motors working in tandem and we dont want them to 
+    //get out of sync with each other
 
 
 
@@ -49,7 +54,8 @@ public class SliderSubsystem extends SubsystemBase {
         rightSliderMotor.setInverted(true);
         rightSliderMotor.burnFlash();
 
-        //set the leftSlider Motor to follow the leader(right) motor
+        //set the leftSlider Motor to follow the leader(right) motor, the second boolean parameter inverts the follower motor so that
+        //it runs exactly opposite of the leader. The sliders have to turn in opposite directions from each other for it to work
        leftSliderMotor.follow(rightSliderMotor, true);
 
 
@@ -68,22 +74,28 @@ public class SliderSubsystem extends SubsystemBase {
     public void goToPos(double encoderCounts){
         leaderPIDController.setReference(encoderCounts, CANSparkMax.ControlType.kPosition);
     }
+    /**
+     * Set the power going to the motors range [-1,1]
+     * @param power
+     */
     public void setPower(double power){
         rightSliderMotor.set(power);
 
     }
-
+    /**
+     * Reset encoders of the left and right Slider Motors
+     */
     public void resetEncoder(){
         leftSliderRelativeEncoder.setPosition(0);
         rightSliderRelativeEncoder.setPosition(0);
     }
 
     /**
-     * 
+     * Get the encoder position of the slider; We only get the encoder position of the 
+     * the right motor because it is the leader motor and he left motors will just mimic whatever the right motor does
      */
     public double getPosition(){
         return rightSliderRelativeEncoder.getPosition();
-        //return 0;
     }
 
 }

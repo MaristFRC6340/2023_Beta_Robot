@@ -24,12 +24,7 @@ public class IntakeTeleopCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /* 
-    if(Robot.getArmControlJoystick().getAButton())intake.outtake();
-    else if(Robot.getArmControlJoystick().getYButton())intake.intake();
-    else intake.stop();
-    SmartDashboard.putNumber("intakePower", intake.getPower());
-    */
+    
     if(Robot.getArmControlJoystick().getBButton()){
       intake.setPower(1);
     }
@@ -40,8 +35,6 @@ public class IntakeTeleopCommand extends CommandBase{
     else{
       intake.setPower(0);
     }
-    
-
   }
 
 

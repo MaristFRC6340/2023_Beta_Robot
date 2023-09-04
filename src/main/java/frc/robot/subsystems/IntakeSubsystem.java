@@ -12,27 +12,18 @@ public class IntakeSubsystem {
 
 
     public IntakeSubsystem(){
-        intakeMotor = new TalonFX(5);
+        intakeMotor = new TalonFX(5);//intake motor is a talon
     }
-
-    public void intake(){
-        intakeMotor.set(TalonFXControlMode.PercentOutput, Constants.IntakeConstants.motorPower);
-        curPower = Constants.IntakeConstants.motorPower;
-    }
-    public void outtake(){
-        intakeMotor.set(TalonFXControlMode.PercentOutput,-Constants.IntakeConstants.motorPower);
-        curPower = -Constants.IntakeConstants.motorPower;
-
-    }
-
+    
+    /**
+     * Sets the intake to run at the designated power.
+     * @param power
+     */
     public void setPower(double power) {
         intakeMotor.set(TalonFXControlMode.PercentOutput, power);
         curPower = power;
     }
-    public void stop(){
-        intakeMotor.set(TalonFXControlMode.PercentOutput,0);
-        curPower = 0;
-    }
+    
     public double getPower(){
         return curPower;
     }

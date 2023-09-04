@@ -18,6 +18,7 @@ public class WristSubsystem extends SubsystemBase{
 
 
     public WristSubsystem(){
+        //create the wristMotor
         wristMotor = new CANSparkMax(8, MotorType.kBrushless);
         //getting the encoder from CANSparkMax
         wristRelativeEncoder = wristMotor.getEncoder();
@@ -35,7 +36,7 @@ public class WristSubsystem extends SubsystemBase{
     }
 
     /**
-     * run the wrist motor to the specified encoder counts and hold it there
+     * Run the wrist motor to the specified encoder counts and hold it there
      * 
      * @param encoderCounts target encoder counts for the motor to run to
      */
@@ -45,7 +46,7 @@ public class WristSubsystem extends SubsystemBase{
     }
 
     /**
-     * 
+     * Set the power of the wrist motor
      */
     public void setPower(double pow){
         wristMotor.set(pow);
@@ -59,6 +60,9 @@ public class WristSubsystem extends SubsystemBase{
         return wristRelativeEncoder.getPosition(); 
     }
 
+    /**
+     * Resets the encoder Counts of the Wrist to 0
+     */
     public void resetEncoder(){
         wristRelativeEncoder.setPosition(0.0);
     }

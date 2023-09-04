@@ -144,6 +144,7 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> robotDrive.drive(0, 0, 0, false));
   }
+  //TODO: WE can probaly delete all these and just create the Command objects in the Robot class
   public Command getWristTeleopCommand(){
     return new WristTeleopCommand(wrist);  // Placeholder
   }

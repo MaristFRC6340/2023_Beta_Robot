@@ -32,9 +32,12 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   //Auto Chooser
-  private Command autoSelected;
   private final SendableChooser<Command> chooser = new SendableChooser<Command>();
   private final SendableChooser<Command[]> teleopChooser = new SendableChooser<Command[]>();
+
+  //Sendable Chooser objects allow you to send a list of items to the Smart Dashboard and then acess whichever one the 
+  //user chooses. We use sendable choosers to send a lis of commands. Whichever command the user selects is scheduled
+
 
 
   // TODO: Define the controllers for driving / arm control in static form
@@ -52,14 +55,16 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+
+
+
     //Read through all the files in the deploy/pathplanner folder and add them as auto options
     ArrayList<String> pathNames = new ArrayList<String>();
-    // /Users/robotics/frc2023/2023_Beta_Robot/src
-    File pathFolder = new File("/home/lvuser/deploy/pathplanner");//acess the path folder
-    
 
+
+    File pathFolder = new File("/home/lvuser/deploy/pathplanner");//acess the path folder on the robot rio. This is where the .path files in the pathplanner folder are put on the robo rio; (I found this by sshing into the robot rio  and digging through the folders)
     try{
-      for(File f: pathFolder.listFiles()){//iterate through all the files in it
+      for(File f: pathFolder.listFiles()){//iterate through all the files in the folder
         if(f.isFile() && f.getName().contains(".path")){//if the file is a .path file
           pathNames.add(f.getName().replace(".path", ""));//add it to the Path Names list
         }
@@ -68,10 +73,12 @@ public class Robot extends TimedRobot {
     catch(NullPointerException e){
       e.printStackTrace();
     }
+    //Add all the found .path file names to the Auto Chooser on Smart Dashboard/ShuffleBoard
     for(String pathFile: pathNames){
       chooser.addOption(pathFile + " (Generated from deploy folder)", m_robotContainer.getPathPlannerLoaderCommand(pathFile));
     }
-    //List CHoosable Autos
+
+    //List Predefined Autos
     chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
     chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
     chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
@@ -79,18 +86,10 @@ public class Robot extends TimedRobot {
     chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
     SmartDashboard.putData("Auto List",chooser);
 
-        
-    SmartDashboard.putNumber("PIDTuningTestPathSelected", 0);
-
     //List Choosable Teleops
     teleopChooser.setDefaultOption("Default/Competition Teleop", new Command[]{m_robotContainer.getDriveTeleopCommand(), m_robotContainer.getShoulderTeleopCommand(), m_robotContainer.getSliderTeleopCommand(), m_robotContainer.getWristTeleopCommand(), m_robotContainer.getIntakeTeleopCommand()});
     teleopChooser.addOption("Testing Teleop(Encoder and PID Tuning)", new Command[]{m_robotContainer.getDrivePIDTuningCommand(), m_robotContainer.getSubsystemEncoderTuningCommand()});
     SmartDashboard.putData("Teleop List", teleopChooser);
-
-    //reset encoder values for shoulder, slider, and wrist
-
-
-
 
   }
 
@@ -121,17 +120,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    autoSelected = chooser.getSelected();
-
-
-    
-
+    //Retreive the selected auto command from the Sendable Chooser Object
+    m_autonomousCommand = chooser.getSelected();
     // schedule the autonomous command (example)
-    if (autoSelected != null) {
-      autoSelected.schedule();
-
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
     }
-  
   }
 
   /** This function is called periodically during autonomous. */
@@ -147,9 +141,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-   for(Command command: teleopChooser.getSelected()){
-    command.schedule();
-   }
+  
+    //Schedule all the teleop commands selected
+    for(Command command: teleopChooser.getSelected()){
+      command.schedule();
+    }
   }
 
   /** This function is called periodically during operator control. */
