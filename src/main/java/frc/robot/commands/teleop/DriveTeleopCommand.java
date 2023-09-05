@@ -6,6 +6,8 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -18,6 +20,8 @@ public class DriveTeleopCommand extends CommandBase {
   // Field for DriveSubsystem
   private final DriveSubsystem m_robotDrive;
   private  double manualSpeedModifier;
+
+  private boolean holdHeadingMode = false;//If hold Heading Mode is True the robot will attempt to hold the heading spesified in the desiredHeading variable. This will minimize drift
 
   private double desiredHeading;
   private PIDController thetaController;
@@ -33,13 +37,14 @@ public class DriveTeleopCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+
     //set the deisred heading to the odometrys heading
     desiredHeading = m_robotDrive.getPose().getRotation().getDegrees();
     //intialize the PID Controller
     thetaController = new PIDController(Constants.DriveConstants.thetaP, Constants.DriveConstants.thetaI, Constants.DriveConstants.thetaD);
     thetaController.enableContinuousInput(-180, 180);
   }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -56,8 +61,8 @@ public class DriveTeleopCommand extends CommandBase {
     //update the theta Controller
     thetaController.setSetpoint(MathUtil.inputModulus(desiredHeading, -180, 180));
 
-    if(Math.abs(MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX(), 0.06)) > 0){
-      desiredHeading += MathUtil.applyDeadband(Robot.getDriveControlJoystick().getRightX(), 0.06);
+    if(Math.abs(MathUtil.applyDeadband(Robot.getDriveControlJoystick().getRightX(), 0.06)) > 0){
+      desiredHeading += MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX(), 0.06);
     }
 
     //wrap the values for the desired heading
@@ -74,6 +79,17 @@ public class DriveTeleopCommand extends CommandBase {
     SmartDashboard.putNumber("rotPower", rotPower);
     SmartDashboard.putNumber("desiredHeading", desiredHeading);
 
+  //If start button is pressed switch Hold Heading Mode
+  if(Robot.getDriveControlJoystick().getStartButtonPressed()){
+    if(holdHeadingMode){
+      holdHeadingMode = false;
+    }
+    else{
+      holdHeadingMode = true;
+      desiredHeading = m_robotDrive.getPose().getRotation().getDegrees();
+    }
+  }
+  SmartDashboard.putBoolean("holdHeadingMode",holdHeadingMode);
 
 
 
@@ -82,8 +98,7 @@ public class DriveTeleopCommand extends CommandBase {
     m_robotDrive.drive(
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
-                /**MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),**/
-                rotPower*.2,
+                holdHeadingMode?rotPower*.4:MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
               true);
 
     if(Robot.getDriveControlJoystick().getPOV()!=-1){

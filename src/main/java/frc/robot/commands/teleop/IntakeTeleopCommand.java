@@ -26,10 +26,10 @@ public class IntakeTeleopCommand extends CommandBase{
   public void execute() {
     
     if(Robot.getArmControlJoystick().getBButton()){
-      intake.setPower(1);
+      intake.setPower(0.75);                      // Mr. Michaud update. Don't run at full power
     }
     else if(Robot.getArmControlJoystick().getXButton()){
-      intake.setPower(-1);
+      intake.setPower(-0.75);                           // Mr. Michaud update. Don't run at full power
 
     }
     else{
