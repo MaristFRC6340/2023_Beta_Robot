@@ -82,11 +82,28 @@ public final class Constants {
       public static final double kIz = 0;
       public static final double kFF = 0;
       //Min and MAx output values from PID Controller (representing motor power)
-      public static final double kMaxOutput = 0.75;
-      public static final double kMinOutput = -.75;
+      public static final double kMaxOutput = 0.25;
+      public static final double kMinOutput = -.25;
       //Constants for min and max encoder values to prevent it hitting things or overroatating
       public static final double MIN_ENCODER_POS = 0;
-      public static final double MAX_ENCODER_POS = 400;
+      public static final double MAX_ENCODER_POS = 80;
+
+
+      //Intakes
+      public static final double intakeGroundCube = 21.73;
+      public static final double intakeShelfCone = 45.33;//For when we are picking up cones from the shelf
+
+      //Cone Outtakes
+      public static final double outtakeHighPoleCone=19.64;
+      public static final double outtakeMidPoleCone=24.6;
+      //Cube Outtakes
+      public static final double outtakeGroundCube=0;
+      public static final double outtakeMidCube=0;
+      public static final double outtakeHighCube=0;
+
+      
+
+
 
   }
   public static final class SliderConstants{
@@ -95,12 +112,18 @@ public final class Constants {
     public static final double kD = 0;
     public static final double kIz = 0;
     public static final double kFF = 0;
-    public static final double kMaxOutput = .5;
-    public static final double kMinOutput = -.5;
+    public static final double kMaxOutput = .25;
+    public static final double kMinOutput = -.25;
     
       //Constants for min and max encoder values to prevent it hitting things or overroatating
     public static final double MIN_ENCODER_POS = 0;
     public static final double MAX_ENCODER_POS = 50;
+
+
+    public static final double sliderNearPole = 26.52;
+    public static final double sliderFarPole = 50.71;
+
+    public static final double sliderGround = 0;
 
 }
 
@@ -120,6 +143,10 @@ public static final class ShoulderConstants{
     //Constants for min and max encoder values to prevent it hitting things or overroatating
   public static final double MIN_ENCODER_POS = 0;
   public static final double MAX_ENCODER_POS = 200;
+
+  public static final double shoulderDeliverCone = 33.61;
+  public static final double shoulderGround = 0;
+
 }
 
   public static final class ModuleConstants {

@@ -44,6 +44,8 @@ public class DriveTeleopCommand extends CommandBase {
     //intialize the PID Controller
     thetaController = new PIDController(Constants.DriveConstants.thetaP, Constants.DriveConstants.thetaI, Constants.DriveConstants.thetaD);
     thetaController.enableContinuousInput(-180, 180);
+
+    SmartDashboard.putBoolean("fieldcentric" , false);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -99,7 +101,7 @@ public class DriveTeleopCommand extends CommandBase {
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftY()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
                 MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getLeftX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
                 holdHeadingMode?rotPower*.4:MathUtil.applyDeadband(-Robot.getDriveControlJoystick().getRightX()*DriveConstants.SpeedMultiplier*manualSpeedModifier, 0.06),
-              true);
+              SmartDashboard.getBoolean("fieldcentric" , false));
 
     if(Robot.getDriveControlJoystick().getPOV()!=-1){
       m_robotDrive.zeroHeading(Robot.getDriveControlJoystick().getPOV());

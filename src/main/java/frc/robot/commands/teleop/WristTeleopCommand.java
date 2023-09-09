@@ -10,7 +10,8 @@ import frc.robot.subsystems.WristSubsystem;
 
 public class WristTeleopCommand extends CommandBase{
     private WristSubsystem wrist;
-    private double wristPos = 0;
+    private double wristPos = 0;//holds the desired encoder position of the writ
+    private int wristMode = 0;//If wrist mode is 0 we move by manual power; If wrist mode is 1 we move using encoder counts
 
 
     public WristTeleopCommand(WristSubsystem wrist){
@@ -21,6 +22,8 @@ public class WristTeleopCommand extends CommandBase{
   @Override
   public void initialize() {
     wristPos = wrist.getPosition();
+    SmartDashboard.putBoolean("ResetWristEncoder", false);
+
   }
   
 
@@ -28,12 +31,27 @@ public class WristTeleopCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
+
+
     wristPos += Robot.getArmControlJoystick().getRightTriggerAxis()*(1/5.0);
     wristPos -= Robot.getArmControlJoystick().getLeftTriggerAxis()*(1/5.0);
+    
     SmartDashboard.putNumber("Wris Pos Expected", wristPos);
     wrist.goToPosition(wristPos);
     //wrist.setPower((Robot.getArmControlJoystick().getRightTriggerAxis()-Robot.getArmControlJoystick().getLeftTriggerAxis())*1.5);
 
+
+    if(SmartDashboard.getBoolean("ResetWristEncoder", false)){
+      wrist.resetEncoder();
+      wristPos = 0;
+      SmartDashboard.putBoolean("ResetWristEncoder", false);
+    }
+
+    if(Robot.getArmControlJoystick().getPOV()==0){
+      wristPos = Constants.WristConstants.outtakeMidPoleCone;
+    }
+    
   }
 
 
