@@ -103,8 +103,12 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Module 2 azimuth(REAR LEFT)", m_rearLeft.getAngle());
         SmartDashboard.putNumber("Module 3 azimuth (REAR RIGHT)", m_rearRight.getAngle());
         SmartDashboard.putNumber("Gyro", m_gryo.getAngle());
+        SmartDashboard.putNumber("Roll: ", m_gryo.getRoll());
+        SmartDashboard.putNumber("Orientation", m_odometry.getPoseMeters().getRotation().getDegrees());
         //update robot position on field
       field.setRobotPose(getPose());
+
+      
   }
 
   /**
@@ -243,6 +247,10 @@ public class DriveSubsystem extends SubsystemBase {
         )
         
       );
+  }
+
+  public double getRoll(){
+    return m_gryo.getRoll();
   }
 }
 

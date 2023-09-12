@@ -62,7 +62,6 @@ public class SliderSubsystem extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("leftSliderEncoderPos", leftSliderRelativeEncoder.getPosition());
         SmartDashboard.putNumber("rightSliderEncoderPos", rightSliderRelativeEncoder.getPosition());
 
     }

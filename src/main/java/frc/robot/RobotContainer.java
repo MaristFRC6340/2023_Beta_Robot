@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
+import frc.robot.commands.autonomous.AutoRampClimb;
+import frc.robot.commands.autonomous.AutoRampClimbExitCommand;
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
 import frc.robot.commands.autonomous.PIDTuningTestPaths;
 import frc.robot.commands.autonomous.PathPlannerLoader;
@@ -183,5 +185,11 @@ public class RobotContainer {
 
   public Command getPathPlannerLoaderCommand(String pathFileName){
     return new PathPlannerLoader(robotDrive, pathFileName);
+  }
+  public Command getAutoRampClimbCommand(){
+    return new AutoRampClimb(robotDrive);
+  }
+  public Command getAutoRampExitCommand(){
+    return new AutoRampClimbExitCommand(robotDrive);
   }
 }

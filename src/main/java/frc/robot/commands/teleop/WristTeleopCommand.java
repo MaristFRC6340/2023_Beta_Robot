@@ -49,7 +49,14 @@ public class WristTeleopCommand extends CommandBase{
     }
 
     if(Robot.getArmControlJoystick().getPOV()==0){
-      wristPos = Constants.WristConstants.outtakeMidPoleCone;
+      wristPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.WristConstants.wristMidCube:Constants.WristConstants.wristMidCone;
+    }
+    else if(Robot.getArmControlJoystick().getPOV() == 90){
+      wristPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.WristConstants.wristFarCube:Constants.WristConstants.wristFarCone;
+
+    }
+    if(Robot.getArmControlJoystick().getYButton()){
+      wristPos = Constants.WristConstants.wristRest;
     }
     
   }

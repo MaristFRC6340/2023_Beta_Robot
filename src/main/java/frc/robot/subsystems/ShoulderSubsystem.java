@@ -53,7 +53,6 @@ public class ShoulderSubsystem extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("leftShoulderEncoderPos", leftShoulderRelativeEncoder.getPosition());
         SmartDashboard.putNumber("rightShoulderEncoderPos", rightShoulderRelativeEncoder.getPosition());
 
     }
@@ -87,7 +86,7 @@ public class ShoulderSubsystem extends SubsystemBase {
      * because it is the leader and the right shoulder motor will just follow anything the left motor will do regardless of encoder counts
      */
     public double getPosition(){
-        return leftShoulderRelativeEncoder.getPosition();
+        return rightShoulderRelativeEncoder.getPosition();
     }
 
 }

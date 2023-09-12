@@ -32,7 +32,7 @@ public class SliderTeleopCommand extends CommandBase{
     @Override
     public void execute() {
      
-      if(Math.abs(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(),.01))>0){//the joystick is used to make microadjustments
+      if(Math.abs(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(),.02))>0){//the joystick is used to make microadjustments
         slider.setPower(MathUtil.applyDeadband(-Robot.getArmControlJoystick().getLeftY(), .06)/5.0);
         sliderPos = slider.getPosition();
       }
@@ -47,9 +47,14 @@ public class SliderTeleopCommand extends CommandBase{
       }
 
       if(Robot.getArmControlJoystick().getPOV()==0){
-        sliderPos = Constants.SliderConstants.sliderNearPole;
+        //False if Slider true if cube
+        sliderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.SliderConstants.sliderMidCube:Constants.SliderConstants.sliderMidCone;
       }
-      else if(Robot.getArmControlJoystick().getPOV() == 180){
+      if(Robot.getArmControlJoystick().getPOV()==90){
+        sliderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.SliderConstants.sliderFarCube:Constants.SliderConstants.sliderFarCone;
+
+      }
+      else if(Robot.getArmControlJoystick().getYButton()){
         sliderPos = Constants.SliderConstants.sliderGround;
       }
 

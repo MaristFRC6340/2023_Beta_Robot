@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autonomous.AutoRampClimb;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -84,6 +85,8 @@ public class Robot extends TimedRobot {
     chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
     chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
     chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
+    chooser.addOption("AutoRampClimb",m_robotContainer.getAutoRampClimbCommand());
+    chooser.addOption("AutoRampClimbExit", m_robotContainer.getAutoRampExitCommand());
     SmartDashboard.putData("Auto List",chooser);
 
     //List Choosable Teleops
@@ -146,6 +149,7 @@ public class Robot extends TimedRobot {
     for(Command command: teleopChooser.getSelected()){
       command.schedule();
     }
+    SmartDashboard.putBoolean("Cone/Cube", false);
   }
 
   /** This function is called periodically during operator control. */

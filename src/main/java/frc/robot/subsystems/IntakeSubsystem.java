@@ -3,10 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem {
+public class IntakeSubsystem extends SubsystemBase{
     private TalonFX intakeMotor;
     private double curPower;
 
