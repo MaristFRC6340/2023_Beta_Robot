@@ -59,6 +59,20 @@ public class Robot extends TimedRobot {
 
 
 
+    
+
+    //List Predefined Autos
+    chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
+    chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
+    chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
+    chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
+    chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
+    chooser.addOption("AutoRampClimb",m_robotContainer.getAutoRampClimbCommand());
+    chooser.addOption("AutoRampClimbExit", m_robotContainer.getAutoRampExitCommand());
+    chooser.addOption("MidConeCommand", m_robotContainer.getMidConeCommand());
+    chooser.addOption("RestCommand", m_robotContainer.getResetCommand());
+    chooser.addOption("OuttakeConeCommand", m_robotContainer.getOuttakeConeCommand());
+    chooser.addOption("AutoBlueConeCommand", m_robotContainer.getAutoBlueMidConeCommand());
     //Read through all the files in the deploy/pathplanner folder and add them as auto options
     ArrayList<String> pathNames = new ArrayList<String>();
 
@@ -78,16 +92,8 @@ public class Robot extends TimedRobot {
     for(String pathFile: pathNames){
       chooser.addOption(pathFile + " (Generated from deploy folder)", m_robotContainer.getPathPlannerLoaderCommand(pathFile));
     }
-
-    //List Predefined Autos
-    chooser.setDefaultOption("Default Auto", m_robotContainer.getTestPathCommand());
-    chooser.addOption("TestPathPlanner", m_robotContainer.getTestPathCommand());
-    chooser.addOption("StraightLineAuto", m_robotContainer.getStraightLineAuto());
-    chooser.addOption("KyleSabatogeJava", m_robotContainer.getKyleSabatogeCommand());
-    chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
-    chooser.addOption("AutoRampClimb",m_robotContainer.getAutoRampClimbCommand());
-    chooser.addOption("AutoRampClimbExit", m_robotContainer.getAutoRampExitCommand());
     SmartDashboard.putData("Auto List",chooser);
+
 
     //List Choosable Teleops
     teleopChooser.setDefaultOption("Default/Competition Teleop", new Command[]{m_robotContainer.getDriveTeleopCommand(), m_robotContainer.getShoulderTeleopCommand(), m_robotContainer.getSliderTeleopCommand(), m_robotContainer.getWristTeleopCommand(), m_robotContainer.getIntakeTeleopCommand()});

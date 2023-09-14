@@ -50,6 +50,8 @@ public class ShoulderSubsystem extends SubsystemBase {
 
         //set the leftShoulder Motor to follow the leader(right) motor
         leftShoulderMotor.follow(rightShoulderMotor, true);
+
+       
     }
     @Override
     public void periodic(){
@@ -79,6 +81,10 @@ public class ShoulderSubsystem extends SubsystemBase {
         leftShoulderRelativeEncoder.setPosition(0);
         rightShoulderRelativeEncoder.setPosition(0);
        
+    }
+    public void setEncoder(double position){
+         //set the encoder positions to be the shoulder start position
+         rightShoulderRelativeEncoder.setPosition(position);
     }
 
     /**

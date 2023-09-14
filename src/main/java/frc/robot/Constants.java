@@ -101,7 +101,8 @@ public final class Constants {
       public static final double wristFarCube = 24.6;
 
 
-      public static final double wristRest = 2;//will be chaned to an intake position later 
+      public static final double wristRest = 2;//will be chaned to an intake position later
+      public static final double wristPickUp = 26.35; 
 
       
 
@@ -116,21 +117,22 @@ public final class Constants {
     public static final double kD = 0;
     public static final double kIz = 0;
     public static final double kFF = 0;
-    public static final double kMaxOutput = .25;
-    public static final double kMinOutput = -.25;
+    public static final double kMaxOutput = .5;
+    public static final double kMinOutput = -.5;
     
       //Constants for min and max encoder values to prevent it hitting things or overroatating
     public static final double MIN_ENCODER_POS = 0;
     public static final double MAX_ENCODER_POS = 50;
 
 
-    public static final double sliderMidCone = 26.52;
-    public static final double sliderFarCone = 51.2;
+    public static final double sliderMidCone = 31.5;
+    //public static final double sliderFarCone = 51.2;
 
-    public static final double sliderMidCube = 26.53;//untested;
-    public static final double sliderFarCube = 51.2;//untested
+    public static final double sliderMidCube = 31.5;//untested;
+    public static final double sliderFarCube = 42.1;//untested
 
     public static final double sliderGround = 0;
+
 
 }
 
@@ -153,10 +155,18 @@ public static final class ShoulderConstants{
 
   public static final double shoulderMidCone = 33.61;
   public static final double shoulderFarCone = 34;
-  public static final double shoulderGround = 0;
+
+
+  public static final double shoulderGround = 2;
+  public static final double shoulderCubePickUp = -1;
+
+  public static final double shoulderConePickUp = 0;//to be tested
+
 
   public static final double shoulderMidCube = 33.61;
-  public static final double shoulderFarCube = 34;
+  public static final double shoulderFarCube = 36.24;
+
+  public static final double shoulderStartPosition = 39.1;//this is the position the shoulder starts in 
 
 }
 

@@ -30,11 +30,15 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
+import frc.robot.commands.autonomous.AutoBlueMidCone;
 import frc.robot.commands.autonomous.AutoRampClimb;
 import frc.robot.commands.autonomous.AutoRampClimbExitCommand;
+import frc.robot.commands.autonomous.IntakeCommand;
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
+import frc.robot.commands.autonomous.MidConeCommand;
 import frc.robot.commands.autonomous.PIDTuningTestPaths;
 import frc.robot.commands.autonomous.PathPlannerLoader;
+import frc.robot.commands.autonomous.ResetSubsystemsCommand;
 import frc.robot.commands.autonomous.StraightLineAuto;
 import frc.robot.commands.autonomous.TestPathPlanner;
 import frc.robot.commands.teleop.DrivePIDTuning;
@@ -96,7 +100,7 @@ public class RobotContainer {
    * @return
    */
   public void resetSubsystemEncoders(){
-    shoulder.resetEncoder();
+    shoulder.setEncoder(Constants.ShoulderConstants.shoulderStartPosition);
     slider.resetEncoder();
     wrist.resetEncoder();
   }
@@ -191,5 +195,17 @@ public class RobotContainer {
   }
   public Command getAutoRampExitCommand(){
     return new AutoRampClimbExitCommand(robotDrive);
+  }
+  public Command getMidConeCommand(){
+    return new MidConeCommand(wrist, shoulder, slider);
+  }
+  public Command getResetCommand(){
+    return new ResetSubsystemsCommand(wrist, shoulder, slider);
+  }
+  public Command getOuttakeConeCommand(){
+    return new IntakeCommand(intake, .5, .5);
+  }
+  public Command getAutoBlueMidConeCommand(){
+    return new AutoBlueMidCone(wrist, shoulder, slider, intake, robotDrive);
   }
 }

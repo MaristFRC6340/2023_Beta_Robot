@@ -45,7 +45,7 @@ public class DriveTeleopCommand extends CommandBase {
     thetaController = new PIDController(Constants.DriveConstants.thetaP, Constants.DriveConstants.thetaI, Constants.DriveConstants.thetaD);
     thetaController.enableContinuousInput(-180, 180);
 
-    SmartDashboard.putBoolean("fieldcentric" , false);
+    SmartDashboard.putBoolean("fieldcentric" , true);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -82,7 +82,7 @@ public class DriveTeleopCommand extends CommandBase {
     SmartDashboard.putNumber("desiredHeading", desiredHeading);
 
   //If start button is pressed switch Hold Heading Mode
-  if(Robot.getDriveControlJoystick().getStartButtonPressed()){
+  if(Robot.getDriveControlJoystick().getAButtonPressed()){
     if(holdHeadingMode){
       holdHeadingMode = false;
     }

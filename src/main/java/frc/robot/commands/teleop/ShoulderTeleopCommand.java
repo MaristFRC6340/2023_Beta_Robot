@@ -57,8 +57,11 @@ public class ShoulderTeleopCommand extends CommandBase{
           shoulderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.ShoulderConstants.shoulderMidCube:Constants.ShoulderConstants.shoulderMidCone;
         }
         if(Robot.getArmControlJoystick().getPOV()==90){
-          shoulderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.ShoulderConstants.shoulderFarCube:Constants.SliderConstants.sliderFarCone;
+          shoulderPos = Constants.ShoulderConstants.shoulderFarCube;
 
+        }
+        else if(Robot.getArmControlJoystick().getPOV ()==180){
+          shoulderPos = Constants.ShoulderConstants.shoulderCubePickUp;
         }
         else if(Robot.getArmControlJoystick().getYButton()){
           shoulderPos = Constants.ShoulderConstants.shoulderGround;

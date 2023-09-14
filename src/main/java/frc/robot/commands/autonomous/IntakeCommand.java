@@ -29,7 +29,8 @@ public class IntakeCommand extends CommandBase{
     double endTime;
   
   /** Creates a new AutoRampClimb. */
-  public IntakeCommand(IntakeSubsystem wrist, double power, double duration) {
+  public IntakeCommand(IntakeSubsystem intake
+  , double power, double duration) {
     this.intake = intake;
     this.power =power;
     this.duration = duration;
@@ -39,13 +40,13 @@ public class IntakeCommand extends CommandBase{
   @Override
   public void initialize() {
       startTime = System.currentTimeMillis();
-      endTime = startTime + (long)(duration*1000);
+      endTime = startTime + (double)(duration*1000);
 
   }
 
   @Override
   public void execute() {
-      intake.setPower(power);
+    intake.setPower(power);
       
   }
 
@@ -56,7 +57,7 @@ public class IntakeCommand extends CommandBase{
 
   @Override
   public boolean isFinished() {
-      return System.currentTimeMillis() < endTime;
+      return !(System.currentTimeMillis() < endTime);
   }
 
 
