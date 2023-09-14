@@ -54,7 +54,7 @@ public class ShoulderTeleopCommand extends CommandBase{
 
         //Dpad up sets shoulder to up position
         if(Robot.getArmControlJoystick().getPOV()==0){
-          shoulderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.ShoulderConstants.shoulderMidCube:Constants.ShoulderConstants.shoulderMidCone;
+          shoulderPos = Constants.ShoulderConstants.shoulderMidCone;
         }
         if(Robot.getArmControlJoystick().getPOV()==90){
           shoulderPos = Constants.ShoulderConstants.shoulderFarCube;

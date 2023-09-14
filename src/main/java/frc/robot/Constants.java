@@ -94,15 +94,15 @@ public final class Constants {
       public static final double intakeShelfCone = 45.33;//For when we are picking up cones from the shelf
 
       //Cone Outtakes
-      public static final double wristFarCone=19.6;
       public static final double wristMidCone=24.6;
 
-      public static final double wristMidCube = 19.6;
-      public static final double wristFarCube = 24.6;
+      public static final double wristMidCube = 24.6;
+      public static final double wristFarCube = 18.8;
 
 
       public static final double wristRest = 2;//will be chaned to an intake position later
       public static final double wristPickUp = 26.35; 
+      public static final double wristConePickup = 0;//to be tested
 
       
 
@@ -126,10 +126,11 @@ public final class Constants {
 
 
     public static final double sliderMidCone = 31.5;
-    //public static final double sliderFarCone = 51.2;
 
     public static final double sliderMidCube = 31.5;//untested;
-    public static final double sliderFarCube = 42.1;//untested
+    public static final double sliderFarCube = 42.2;//untested
+
+    public static final double sliderConePickup = 0;//UNKNOWN AS OF YET
 
     public static final double sliderGround = 0;
 
@@ -154,7 +155,6 @@ public static final class ShoulderConstants{
   public static final double MAX_ENCODER_POS = 200;
 
   public static final double shoulderMidCone = 33.61;
-  public static final double shoulderFarCone = 34;
 
 
   public static final double shoulderGround = 2;

@@ -48,10 +48,10 @@ public class SliderTeleopCommand extends CommandBase{
 
       if(Robot.getArmControlJoystick().getPOV()==0){
         //False if Slider true if cube
-        sliderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.SliderConstants.sliderMidCube:Constants.SliderConstants.sliderMidCone;
+        sliderPos = Constants.SliderConstants.sliderMidCone;
       }
       if(Robot.getArmControlJoystick().getPOV()==90){
-        //sliderPos = SmartDashboard.getBoolean("Cone/Cube", isFinished())?Constants.SliderConstants.sliderFarCube:Constants.SliderConstants.sliderFarCone;
+        sliderPos = Constants.SliderConstants.sliderFarCube;
       }
       else if(Robot.getArmControlJoystick().getPOV()==180){
         sliderPos = Constants.SliderConstants.sliderGround;
