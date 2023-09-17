@@ -69,10 +69,10 @@ public class Robot extends TimedRobot {
     chooser.addOption("PIDTuningTestPaths", m_robotContainer.getPIDTuningTestPath());
     chooser.addOption("AutoRampClimb",m_robotContainer.getAutoRampClimbCommand());
     chooser.addOption("AutoRampClimbExit", m_robotContainer.getAutoRampExitCommand());
-    chooser.addOption("MidConeCommand", m_robotContainer.getMidConeCommand());
-    chooser.addOption("RestCommand", m_robotContainer.getResetCommand());
-    chooser.addOption("OuttakeConeCommand", m_robotContainer.getOuttakeConeCommand());
     chooser.addOption("AutoBlueConeCommand", m_robotContainer.getAutoBlueMidConeCommand());
+    chooser.addOption("AutoRampClimbPlusMidCube", m_robotContainer.getAutoRampClimbPlusMidCubeCommand());
+    chooser.addOption("AutoRampClimbPlusFarCube", m_robotContainer.getAutoRampClimbPlusHighCubeCommand());
+
     //Read through all the files in the deploy/pathplanner folder and add them as auto options
     ArrayList<String> pathNames = new ArrayList<String>();
 

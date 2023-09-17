@@ -10,17 +10,23 @@ import frc.robot.subsystems.ShoulderSubsystem;
 import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
-public class AutoBlueMidCone extends SequentialCommandGroup {
+public class MidConeAndResetCommand extends SequentialCommandGroup {
     /** Creates a new AutoRampClimb. */
-    public AutoBlueMidCone(WristSubsystem wrist, ShoulderSubsystem shoulder, SliderSubsystem slider, IntakeSubsystem intake, DriveSubsystem drive) {
+    public MidConeAndResetCommand(WristSubsystem wrist, ShoulderSubsystem shoulder, SliderSubsystem slider, IntakeSubsystem intake, double intakePower) {
   
       // Add your commands in the addCommands() call, e.g.
       // addCommands(new FooCommand(), new BarCommand());
       addCommands(
         
-        // intake power is .5 to intake a cone
-        new MidConeAndResetCommand(wrist, shoulder, slider, intake, .5),
-        new DriveTimeTestCommand(drive, -.2, 0, 0, 4.5)
+        // Ramp Climber: Substitute with RampClimbNavX when finished
+        
+        new MidConeCommand(wrist, shoulder, slider),
+        new WaitCommand(.5),
+        new IntakeCommand(intake, intakePower,.5),
+        new WaitCommand(1),
+        new SliderRetractCommand(slider),
+        new ResetSubsystemsCommand(wrist, shoulder, slider),
+        new WaitCommand(1)
         
       );
     }

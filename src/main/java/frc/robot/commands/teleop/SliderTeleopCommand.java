@@ -56,6 +56,9 @@ public class SliderTeleopCommand extends CommandBase{
       else if(Robot.getArmControlJoystick().getPOV()==180){
         sliderPos = Constants.SliderConstants.sliderGround;
       }
+      if(Robot.getArmControlJoystick().getPOV ()==270){
+        sliderPos = Constants.SliderConstants.sliderConePickup;
+      }
       else if(Robot.getArmControlJoystick().getYButton()){
         sliderPos = Constants.SliderConstants.sliderGround;
       }

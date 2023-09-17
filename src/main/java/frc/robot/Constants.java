@@ -101,8 +101,8 @@ public final class Constants {
 
 
       public static final double wristRest = 2;//will be chaned to an intake position later
-      public static final double wristPickUp = 26.35; 
-      public static final double wristConePickup = 0;//to be tested
+      public static final double wristPickUp = 25.69; // changed from 26.35 to 25.69 by ALESSIO TONIOLO 9/15/2023
+      public static final double wristConePickup = 20.33;//to be tested
 
       
 
@@ -158,9 +158,9 @@ public static final class ShoulderConstants{
 
 
   public static final double shoulderGround = 2;
-  public static final double shoulderCubePickUp = -1;
+  public static final double shoulderCubePickUp = 2.29; // changed from -1 to to  by ALESSIO TONIOLO 9/15/2023
 
-  public static final double shoulderConePickUp = 0;//to be tested
+  public static final double shoulderConePickUp = 27.55;//to be tested
 
 
   public static final double shoulderMidCube = 33.61;

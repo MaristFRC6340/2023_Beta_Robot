@@ -50,11 +50,15 @@ public class WristTeleopCommand extends CommandBase{
 
     if(Robot.getArmControlJoystick().getPOV()==0){
       wristPos = Constants.WristConstants.wristMidCone;
+    }
+    else if(Robot.getArmControlJoystick().getPOV()==90){
       wristPos = Constants.WristConstants.wristFarCube;
-
     }
     else if(Robot.getArmControlJoystick().getPOV()==180){
       wristPos = Constants.WristConstants.wristPickUp;
+    }
+    else if(Robot.getArmControlJoystick().getPOV()==270){
+      wristPos = Constants.WristConstants.wristConePickup;
     }
     if(Robot.getArmControlJoystick().getYButton()){
       wristPos = Constants.WristConstants.wristRest;

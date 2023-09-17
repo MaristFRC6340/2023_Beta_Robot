@@ -13,6 +13,9 @@ public class ShoulderTeleopCommand extends CommandBase{
     private ShoulderSubsystem shoulder;
     private double shoulderPos;//Desired Position of the Shoulder
     private int shoulderMode; //Mode that the shoulder is being controlled in; 0 is direct power 1 is through encoder positions
+
+    private boolean restScheduled = false;///if resetisScheduled the shoulder will reset back to rest position as soon as the slider as reached its rest position
+
     public ShoulderTeleopCommand(ShoulderSubsystem shoulder){
         this.shoulder = shoulder;
         this.shoulderPos=0;
@@ -60,15 +63,24 @@ public class ShoulderTeleopCommand extends CommandBase{
           shoulderPos = Constants.ShoulderConstants.shoulderFarCube;
 
         }
-        else if(Robot.getArmControlJoystick().getPOV ()==180){
+        if(Robot.getArmControlJoystick().getPOV ()==180){
           shoulderPos = Constants.ShoulderConstants.shoulderCubePickUp;
         }
-        else if(Robot.getArmControlJoystick().getYButton()){
-          shoulderPos = Constants.ShoulderConstants.shoulderGround;
+        if(Robot.getArmControlJoystick().getPOV ()==270){
+          shoulderPos = Constants.ShoulderConstants.shoulderConePickUp;
+        }
+        if(Robot.getArmControlJoystick().getYButton()){
+          restScheduled = true;
         }
         SmartDashboard.putNumber("DPAD:", Robot.getArmControlJoystick().getPOV());
 
         SmartDashboard.putNumber("ShoulderPosExpected", shoulderPos);
+
+        if(restScheduled && SmartDashboard.getNumber("rightSliderEncoderPos", 0) < 5){
+          shoulderPos = Constants.ShoulderConstants.shoulderGround;
+          restScheduled = false;
+
+        }
 
     }
 

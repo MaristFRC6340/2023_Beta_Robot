@@ -54,7 +54,10 @@ public class DriveTeleopCommand extends CommandBase {
       manualSpeedModifier = 2;
     }
     else if (Robot.getDriveControlJoystick().getLeftTriggerAxis()>0){
-      manualSpeedModifier =1-Robot.getDriveControlJoystick().getLeftTriggerAxis(); 
+      manualSpeedModifier =(1-Robot.getDriveControlJoystick().getLeftTriggerAxis())/2; 
+    }
+    else if(Robot.getArmControlJoystick().getRightStickButton()){
+      manualSpeedModifier = .2;
     }
     else{
       manualSpeedModifier=1;

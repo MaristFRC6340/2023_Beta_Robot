@@ -33,6 +33,8 @@ import java.util.List;
 import frc.robot.commands.autonomous.AutoBlueMidCone;
 import frc.robot.commands.autonomous.AutoRampClimb;
 import frc.robot.commands.autonomous.AutoRampClimbExitCommand;
+import frc.robot.commands.autonomous.AutoRampClimbPlusHighCubeCommand;
+import frc.robot.commands.autonomous.AutoRampClimbPlusMidCubeCommand;
 import frc.robot.commands.autonomous.IntakeCommand;
 import frc.robot.commands.autonomous.KyleSabatogeJavaPath;
 import frc.robot.commands.autonomous.MidConeCommand;
@@ -193,6 +195,9 @@ public class RobotContainer {
   public Command getAutoRampClimbCommand(){
     return new AutoRampClimb(robotDrive);
   }
+  public Command getAutoRampClimbPlusMidCubeCommand(){
+    return new AutoRampClimbPlusMidCubeCommand(robotDrive, shoulder, wrist, slider, intake);
+  }
   public Command getAutoRampExitCommand(){
     return new AutoRampClimbExitCommand(robotDrive);
   }
@@ -207,5 +212,8 @@ public class RobotContainer {
   }
   public Command getAutoBlueMidConeCommand(){
     return new AutoBlueMidCone(wrist, shoulder, slider, intake, robotDrive);
+  }
+  public Command getAutoRampClimbPlusHighCubeCommand(){
+    return new AutoRampClimbPlusHighCubeCommand(robotDrive, shoulder, wrist, slider, intake);
   }
 }
